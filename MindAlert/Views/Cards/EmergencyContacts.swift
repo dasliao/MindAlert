@@ -67,6 +67,7 @@ struct EmergencyContacts: View {
                                                 
                                             }
                                             .foregroundColor(Color("MindLightPeach"))
+                                            .padding(5)
                                             Divider()
                                             VStack(alignment: .leading) {
                                                 Text("Emergency Message:")
@@ -76,8 +77,12 @@ struct EmergencyContacts: View {
                                                     .frame(width: 280, height: 280, alignment: .leading)
                                                     .lineSpacing(10)
                                                     .padding()
-                                                    .border(Color("MindPeach"), width: 3)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 25)
+                                                            .stroke(Color("MindPeach"), style: StrokeStyle(lineWidth: 3))
+                                                    )
                                             }
+                                            .padding(5)
                                         }
                                         
                                     }
@@ -98,6 +103,7 @@ struct EmergencyContacts: View {
                                 }
                             }
                             .padding(25)
+                            
                         }
                     }
                 }

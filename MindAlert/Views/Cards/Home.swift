@@ -19,25 +19,28 @@ struct Home: View {
                 Text("Hello \(Text("Kim!").foregroundColor(Color("MindGreen")))")
                     .font(.system(size: 40, weight: .bold))
                     .padding(.top, 40)
-                Text("Press the Button for 3 Second\nto activate your \(Text("Safety Plan").font(.system(size: 20, weight: .bold))).")
-                    .font(.system(size: 20))
                 Spacer()
-                HStack {
-                    Spacer()
-                    Button {
-                        let tel = "tel://"
-                        let telFormatted = tel + phoneNumber
-                        guard let url = URL(string: telFormatted) else { return }
-                        UIApplication.shared.open(url)
-//                        let sms = "sms:\(numToSms)&body=\(message)"
-//                        let strURL = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//                        UIApplication.shared.open(URL.init(string: strURL)!, options: [:], completionHandler: nil)
-                    } label: {
-                        Image("TheButtonLarge")
+                VStack(alignment: .center) {
+                    HStack {
+                        Spacer()
+                        Button {
+                            let tel = "tel://"
+                            let telFormatted = tel + phoneNumber
+                            guard let url = URL(string: telFormatted) else { return }
+                            UIApplication.shared.open(url)
+    //                        let sms = "sms:\(numToSms)&body=\(message)"
+    //                        let strURL = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+    //                        UIApplication.shared.open(URL.init(string: strURL)!, options: [:], completionHandler: nil)
+                        } label: {
+                            Image("TheButtonLarge")
+                        }
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    Text("Press the Button for 3 Second\nto activate your \(Text("Safety Plan").font(.system(size: 20, weight: .bold))).")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color("MindGreen"))
                 }
+                
                 
                 Spacer()
                 ZStack {
