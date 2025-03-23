@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CopingStrategiesYes: View {
-    @State var text = ""
-    @State var text2 = ""
+    @ObservedObject var viewModel: SafetyPlanViewModel
+    @State private var newStrategy = ""
     @State var selection: Int? = nil
     
     var body: some View {
@@ -37,52 +37,78 @@ struct CopingStrategiesYes: View {
                                         .foregroundColor(Color("MindBlack"))
                                 }
                                 Spacer()
-                                VStack(alignment:.leading) {
-                                    Text("Sounds good, \nlet’s list your strategies ")
-                                    VStack(alignment: .leading, spacing: 25) {
-                                        VStack(alignment: .leading) {
-                                            Text("Strategy 1")
+                                
+                                ScrollView {
+                                    VStack(alignment:.leading) {
+                                        Text("Sounds good, \nlet's list your strategies ")
+                                            .foregroundColor(Color("MindBlack"))
+                                            .font(.system(size: 32, weight: .semibold))
+                                        
+                                        // List existing strategies
+                                        ForEach(viewModel.safetyPlan.strategies.indices, id: \.self) { index in
+                                            VStack(alignment: .leading, spacing: 5) {
+                                                HStack {
+                                                    Text("Strategy \(index + 1)")
+                                                        .padding(10)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 15)
+                                                                .stroke(Color("MindPeach"), lineWidth: 3)
+                                                        )
+                                                        .font(.system(size: 16, weight: .medium))
+                                                    
+                                                    Spacer()
+                                                    
+                                                    Button(action: {
+                                                        viewModel.removeStrategy(at: index)
+                                                    }) {
+                                                        Image(systemName: "minus.circle.fill")
+                                                            .foregroundColor(Color("MindPeach"))
+                                                    }
+                                                }
+                                                
+                                                Text(viewModel.safetyPlan.strategies[index])
+                                                    .font(.system(size: 20, weight: .semibold))
+                                                    .padding(.bottom, 10)
+                                            }
+                                            .padding(.top, 10)
+                                        }
+                                        
+                                        // Add new strategy section
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text("Add New Strategy")
                                                 .padding(10)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 15)
                                                         .stroke(Color("MindPeach"), lineWidth: 3)
                                                 )
                                                 .font(.system(size: 16, weight: .medium))
-                                            TextField("Play Minecraft", text: $text)
-                                                .font(.system(size: 20, weight: .semibold))
-                                                .underlineTextField()
+                                            
+                                            HStack {
+                                                TextField("Ex: Play Minecraft", text: $newStrategy)
+                                                    .font(.system(size: 20, weight: .semibold))
+                                                    .underlineTextField()
+                                                
+                                                Button(action: {
+                                                    if !newStrategy.isEmpty {
+                                                        viewModel.addStrategy(newStrategy)
+                                                        newStrategy = ""
+                                                    }
+                                                }) {
+                                                    Image(systemName: "plus.circle.fill")
+                                                        .foregroundColor(Color("MindGreen"))
+                                                        .font(.system(size: 24))
+                                                }
+                                            }
                                         }
-                                        VStack(alignment: .leading) {
-                                            Text("Strategy 2")
-                                                .padding(10)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 15)
-                                                        .stroke(Color("MindPeach"), lineWidth: 3)
-                                                )
-                                                .font(.system(size: 16, weight: .medium))
-                                            TextField("Watch Eternals", text: $text2)
-                                                .underlineTextField()
-                                                .font(.system(size: 20, weight: .semibold))
-                                        }
-                                        Text("\(Image(systemName: "plus"))")
-                                            .padding(10)
-                                            .padding(.horizontal, 15)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 15)
-                                                    .stroke(Color("MindPeach"), lineWidth: 3)
-                                            )
-                                            .font(.system(size: 16, weight: .medium))
+                                        .padding(.top, 20)
                                     }
-                                    
                                 }
-                                .foregroundColor(Color("MindBlack"))
-                                .font(.system(size: 32, weight: .semibold))
                                 
                                 Spacer()
                                 HStack {
                                     Spacer()
                                     NavigationLink(
-                                        destination: EmergencyContacts(), tag: 1, selection: $selection) {
+                                        destination: EmergencyContacts(viewModel: viewModel), tag: 1, selection: $selection) {
                                         Button("Next") {
                                             self.selection = 1
                                         }
@@ -100,11 +126,5 @@ struct CopingStrategiesYes: View {
             .hiddenNavigationBarStyle()
         }
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct CopingStrategiesYes_Previews: PreviewProvider {
-    static var previews: some View {
-        CopingStrategiesYes()
     }
 }
