@@ -15,11 +15,7 @@
 		91A5A28B280C032300AE97D3 /* MindAlertUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A28A280C032300AE97D3 /* MindAlertUITests.swift */; };
 		91A5A28D280C032300AE97D3 /* MindAlertUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A28C280C032300AE97D3 /* MindAlertUITestsLaunchTests.swift */; };
 		91A5A29A280C04D800AE97D3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A299280C04D800AE97D3 /* LoadingView.swift */; };
-		91A5A2A0280C0F0800AE97D3 /* nameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A29F280C0F0800AE97D3 /* nameView.swift */; };
 		91A5A2A2280C17C900AE97D3 /* GreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2A1280C17C900AE97D3 /* GreenButton.swift */; };
-		91A5A2A4280C211300AE97D3 /* WelcomeView_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2A3280C211300AE97D3 /* WelcomeView_1.swift */; };
-		91A5A2A6280C237C00AE97D3 /* WelcomeView_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2A5280C237C00AE97D3 /* WelcomeView_2.swift */; };
-		91A5A2A8280C27A800AE97D3 /* WelcomeView_3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2A7280C27A800AE97D3 /* WelcomeView_3.swift */; };
 		91A5A2AA280C2B4C00AE97D3 /* InfoAndDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2A9280C2B4C00AE97D3 /* InfoAndDisclaimer.swift */; };
 		91A5A2AE280C300700AE97D3 /* CopingStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2AD280C300700AE97D3 /* CopingStrategies.swift */; };
 		91A5A2B0280C326D00AE97D3 /* RedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2AF280C326D00AE97D3 /* RedButton.swift */; };
@@ -27,9 +23,24 @@
 		91A5A2B4280C3A5900AE97D3 /* CopingStrategiesNo_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B3280C3A5900AE97D3 /* CopingStrategiesNo_1.swift */; };
 		91A5A2B6280C3DA900AE97D3 /* EmergencyContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B5280C3DA900AE97D3 /* EmergencyContacts.swift */; };
 		91A5A2B8280C467900AE97D3 /* EmergencyServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B7280C467900AE97D3 /* EmergencyServicesView.swift */; };
-		91A5A2BA280C545000AE97D3 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B9280C545000AE97D3 /* Home.swift */; };
-		91A5A2BC280C629300AE97D3 /* HideNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2BB280C629300AE97D3 /* HideNavBar.swift */; };
 		91A5A2C4280C7E3400AE97D3 /* CompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2C3280C7E3400AE97D3 /* CompleteView.swift */; };
+		/* New files */
+		CA000001280D000100000001 /* SafetyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000002280D000100000001 /* SafetyPlan.swift */; };
+		CA000003280D000100000002 /* SafetyPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000004280D000100000002 /* SafetyPlanViewModel.swift */; };
+		CA000005280D000100000003 /* MindAlertTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000006280D000100000003 /* MindAlertTheme.swift */; };
+		CA000007280D000100000004 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000008280D000100000004 /* ViewExtensions.swift */; };
+		CA000009280D000100000005 /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00000A280D000100000005 /* AppRootView.swift */; };
+		CA00000B280D000100000006 /* NameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00000C280D000100000006 /* NameView.swift */; };
+		CA00000D280D000100000007 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00000E280D000100000007 /* OnboardingFlowView.swift */; };
+		CA00000F280D000100000008 /* OnboardingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000010280D000100000008 /* OnboardingProgressIndicator.swift */; };
+		CA000011280D000100000009 /* WelcomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000012280D000100000009 /* WelcomePageView.swift */; };
+		CA000013280D00010000000A /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000014280D00010000000A /* HomeTabView.swift */; };
+		CA000015280D00010000000B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000016280D00010000000B /* HomeView.swift */; };
+		CA000017280D00010000000C /* PanicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000018280D00010000000C /* PanicButton.swift */; };
+		CA000019280D00010000000D /* ResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00001A280D00010000000D /* ResourcesView.swift */; };
+		CA00001B280D00010000000E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00001C280D00010000000E /* ProfileView.swift */; };
+		CA00001D280D00010000000F /* SMSComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00001E280D00010000000F /* SMSComposerView.swift */; };
+		CA00001F280D000100000010 /* SafetyPlanActivatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000020280D000100000010 /* SafetyPlanActivatedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,11 +72,7 @@
 		91A5A28A280C032300AE97D3 /* MindAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindAlertUITests.swift; sourceTree = "<group>"; };
 		91A5A28C280C032300AE97D3 /* MindAlertUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindAlertUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		91A5A299280C04D800AE97D3 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		91A5A29F280C0F0800AE97D3 /* nameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nameView.swift; sourceTree = "<group>"; };
 		91A5A2A1280C17C900AE97D3 /* GreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenButton.swift; sourceTree = "<group>"; };
-		91A5A2A3280C211300AE97D3 /* WelcomeView_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView_1.swift; sourceTree = "<group>"; };
-		91A5A2A5280C237C00AE97D3 /* WelcomeView_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView_2.swift; sourceTree = "<group>"; };
-		91A5A2A7280C27A800AE97D3 /* WelcomeView_3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView_3.swift; sourceTree = "<group>"; };
 		91A5A2A9280C2B4C00AE97D3 /* InfoAndDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAndDisclaimer.swift; sourceTree = "<group>"; };
 		91A5A2AD280C300700AE97D3 /* CopingStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingStrategies.swift; sourceTree = "<group>"; };
 		91A5A2AF280C326D00AE97D3 /* RedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedButton.swift; sourceTree = "<group>"; };
@@ -73,9 +80,24 @@
 		91A5A2B3280C3A5900AE97D3 /* CopingStrategiesNo_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingStrategiesNo_1.swift; sourceTree = "<group>"; };
 		91A5A2B5280C3DA900AE97D3 /* EmergencyContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContacts.swift; sourceTree = "<group>"; };
 		91A5A2B7280C467900AE97D3 /* EmergencyServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyServicesView.swift; sourceTree = "<group>"; };
-		91A5A2B9280C545000AE97D3 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		91A5A2BB280C629300AE97D3 /* HideNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideNavBar.swift; sourceTree = "<group>"; };
 		91A5A2C3280C7E3400AE97D3 /* CompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteView.swift; sourceTree = "<group>"; };
+		/* New file references */
+		CA000002280D000100000001 /* SafetyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyPlan.swift; sourceTree = "<group>"; };
+		CA000004280D000100000002 /* SafetyPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyPlanViewModel.swift; sourceTree = "<group>"; };
+		CA000006280D000100000003 /* MindAlertTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindAlertTheme.swift; sourceTree = "<group>"; };
+		CA000008280D000100000004 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		CA00000A280D000100000005 /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		CA00000C280D000100000006 /* NameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameView.swift; sourceTree = "<group>"; };
+		CA00000E280D000100000007 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
+		CA000010280D000100000008 /* OnboardingProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingProgressIndicator.swift; sourceTree = "<group>"; };
+		CA000012280D000100000009 /* WelcomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageView.swift; sourceTree = "<group>"; };
+		CA000014280D00010000000A /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		CA000016280D00010000000B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		CA000018280D00010000000C /* PanicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanicButton.swift; sourceTree = "<group>"; };
+		CA00001A280D00010000000D /* ResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesView.swift; sourceTree = "<group>"; };
+		CA00001C280D00010000000E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		CA00001E280D00010000000F /* SMSComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSComposerView.swift; sourceTree = "<group>"; };
+		CA000020280D000100000010 /* SafetyPlanActivatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyPlanActivatedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +149,9 @@
 			isa = PBXGroup;
 			children = (
 				91A5A26F280C032200AE97D3 /* MindAlertApp.swift */,
+				CA000002280D000100000001 /* SafetyPlan.swift */,
+				CA000004280D000100000002 /* SafetyPlanViewModel.swift */,
+				CA00002A280D000100000020 /* Theme */,
 				91A5A29D280C0EEE00AE97D3 /* Views */,
 				91A5A273280C032300AE97D3 /* Assets.xcassets */,
 				91A5A275280C032300AE97D3 /* Preview Content */,
@@ -164,31 +189,54 @@
 		91A5A29D280C0EEE00AE97D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				91A5A29E280C0EF800AE97D3 /* Cards */,
 				91A5A271280C032200AE97D3 /* ContentView.swift */,
 				91A5A299280C04D800AE97D3 /* LoadingView.swift */,
+				CA00000A280D000100000005 /* AppRootView.swift */,
+				CA00002B280D000100000021 /* Onboarding */,
+				CA00002C280D000100000022 /* Home */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		91A5A29E280C0EF800AE97D3 /* Cards */ = {
+		CA00002A280D000100000020 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				91A5A29F280C0F0800AE97D3 /* nameView.swift */,
-				91A5A2A3280C211300AE97D3 /* WelcomeView_1.swift */,
-				91A5A2A5280C237C00AE97D3 /* WelcomeView_2.swift */,
-				91A5A2A7280C27A800AE97D3 /* WelcomeView_3.swift */,
+				CA000006280D000100000003 /* MindAlertTheme.swift */,
+				CA000008280D000100000004 /* ViewExtensions.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CA00002B280D000100000021 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				CA00000E280D000100000007 /* OnboardingFlowView.swift */,
+				CA000010280D000100000008 /* OnboardingProgressIndicator.swift */,
+				CA00000C280D000100000006 /* NameView.swift */,
+				CA000012280D000100000009 /* WelcomePageView.swift */,
 				91A5A2A9280C2B4C00AE97D3 /* InfoAndDisclaimer.swift */,
 				91A5A2AD280C300700AE97D3 /* CopingStrategies.swift */,
-				91A5A2B3280C3A5900AE97D3 /* CopingStrategiesNo_1.swift */,
 				91A5A2B1280C337300AE97D3 /* CopingStrategiesYes.swift */,
+				91A5A2B3280C3A5900AE97D3 /* CopingStrategiesNo_1.swift */,
 				91A5A2B5280C3DA900AE97D3 /* EmergencyContacts.swift */,
 				91A5A2B7280C467900AE97D3 /* EmergencyServicesView.swift */,
 				91A5A2C3280C7E3400AE97D3 /* CompleteView.swift */,
-				91A5A2B9280C545000AE97D3 /* Home.swift */,
-				91A5A2BB280C629300AE97D3 /* HideNavBar.swift */,
 			);
-			path = Cards;
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CA00002C280D000100000022 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				CA000014280D00010000000A /* HomeTabView.swift */,
+				CA000016280D00010000000B /* HomeView.swift */,
+				CA000018280D00010000000C /* PanicButton.swift */,
+				CA000020280D000100000010 /* SafetyPlanActivatedView.swift */,
+				CA00001E280D00010000000F /* SMSComposerView.swift */,
+				CA00001A280D00010000000D /* ResourcesView.swift */,
+				CA00001C280D00010000000E /* ProfileView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,24 +369,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91A5A2AE280C300700AE97D3 /* CopingStrategies.swift in Sources */,
-				91A5A2BC280C629300AE97D3 /* HideNavBar.swift in Sources */,
-				91A5A272280C032200AE97D3 /* ContentView.swift in Sources */,
-				91A5A2B6280C3DA900AE97D3 /* EmergencyContacts.swift in Sources */,
-				91A5A2A0280C0F0800AE97D3 /* nameView.swift in Sources */,
-				91A5A2A6280C237C00AE97D3 /* WelcomeView_2.swift in Sources */,
-				91A5A2A2280C17C900AE97D3 /* GreenButton.swift in Sources */,
-				91A5A2B8280C467900AE97D3 /* EmergencyServicesView.swift in Sources */,
-				91A5A2A4280C211300AE97D3 /* WelcomeView_1.swift in Sources */,
-				91A5A2AA280C2B4C00AE97D3 /* InfoAndDisclaimer.swift in Sources */,
 				91A5A270280C032200AE97D3 /* MindAlertApp.swift in Sources */,
-				91A5A2C4280C7E3400AE97D3 /* CompleteView.swift in Sources */,
+				91A5A272280C032200AE97D3 /* ContentView.swift in Sources */,
+				91A5A29A280C04D800AE97D3 /* LoadingView.swift in Sources */,
+				91A5A2A2280C17C900AE97D3 /* GreenButton.swift in Sources */,
+				91A5A2B0280C326D00AE97D3 /* RedButton.swift in Sources */,
+				CA000001280D000100000001 /* SafetyPlan.swift in Sources */,
+				CA000003280D000100000002 /* SafetyPlanViewModel.swift in Sources */,
+				CA000005280D000100000003 /* MindAlertTheme.swift in Sources */,
+				CA000007280D000100000004 /* ViewExtensions.swift in Sources */,
+				CA000009280D000100000005 /* AppRootView.swift in Sources */,
+				CA00000B280D000100000006 /* NameView.swift in Sources */,
+				CA00000D280D000100000007 /* OnboardingFlowView.swift in Sources */,
+				CA00000F280D000100000008 /* OnboardingProgressIndicator.swift in Sources */,
+				CA000011280D000100000009 /* WelcomePageView.swift in Sources */,
+				91A5A2AA280C2B4C00AE97D3 /* InfoAndDisclaimer.swift in Sources */,
+				91A5A2AE280C300700AE97D3 /* CopingStrategies.swift in Sources */,
 				91A5A2B2280C337300AE97D3 /* CopingStrategiesYes.swift in Sources */,
 				91A5A2B4280C3A5900AE97D3 /* CopingStrategiesNo_1.swift in Sources */,
-				91A5A29A280C04D800AE97D3 /* LoadingView.swift in Sources */,
-				91A5A2B0280C326D00AE97D3 /* RedButton.swift in Sources */,
-				91A5A2BA280C545000AE97D3 /* Home.swift in Sources */,
-				91A5A2A8280C27A800AE97D3 /* WelcomeView_3.swift in Sources */,
+				91A5A2B6280C3DA900AE97D3 /* EmergencyContacts.swift in Sources */,
+				91A5A2B8280C467900AE97D3 /* EmergencyServicesView.swift in Sources */,
+				91A5A2C4280C7E3400AE97D3 /* CompleteView.swift in Sources */,
+				CA000013280D00010000000A /* HomeTabView.swift in Sources */,
+				CA000015280D00010000000B /* HomeView.swift in Sources */,
+				CA000017280D00010000000C /* PanicButton.swift in Sources */,
+				CA000019280D00010000000D /* ResourcesView.swift in Sources */,
+				CA00001B280D00010000000E /* ProfileView.swift in Sources */,
+				CA00001D280D00010000000F /* SMSComposerView.swift in Sources */,
+				CA00001F280D000100000010 /* SafetyPlanActivatedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -479,7 +537,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -505,7 +563,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -514,7 +572,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -535,7 +593,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -544,7 +602,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -558,12 +616,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D4N975E759;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlertTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindAlert.app/MindAlert";
 			};
@@ -578,12 +636,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D4N975E759;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlertTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindAlert.app/MindAlert";
 			};
@@ -601,7 +659,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlertUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = MindAlert;
 			};
@@ -619,7 +677,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlertUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = MindAlert;
 			};
