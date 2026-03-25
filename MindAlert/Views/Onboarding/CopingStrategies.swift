@@ -11,7 +11,7 @@ struct CopingStrategies: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Spacer()
-                    OnboardingProgressIndicator(totalSteps: 4, currentStep: 1)
+                    OnboardingProgressIndicator(totalSteps: 3, currentStep: 1)
                     Spacer()
                 }
                 Spacer(minLength: 10)
@@ -47,7 +47,14 @@ struct CopingStrategies: View {
                         HStack {
                             Spacer()
                             Button("No, I need help") { onNo() }
-                                .buttonStyle(PeachButton())
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundStyle(MindAlertTheme.mindBlack)
+                                .padding(.vertical, 16)
+                                .padding(.horizontal, 40)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(MindAlertTheme.mindLightGreen.opacity(0.5), lineWidth: 2)
+                                )
                             Spacer()
                         }
                     }

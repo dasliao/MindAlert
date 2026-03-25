@@ -9,7 +9,7 @@ struct CopingStrategiesNo_1: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Spacer()
-                    OnboardingProgressIndicator(totalSteps: 4, currentStep: 1)
+                    OnboardingProgressIndicator(totalSteps: 3, currentStep: 1)
                     Spacer()
                 }
                 Spacer(minLength: 10)

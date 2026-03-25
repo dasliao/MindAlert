@@ -1,9 +1,7 @@
 import SwiftUI
 
 enum OnboardingStep: Hashable {
-    case welcome1
-    case welcome2
-    case welcome3
+    case welcome
     case infoDisclaimer
     case copingBranch
     case copingNo
@@ -21,22 +19,12 @@ struct OnboardingFlowView: View {
     var body: some View {
         NavigationStack(path: $path) {
             NameView(viewModel: viewModel) {
-                path.append(OnboardingStep.welcome1)
+                path.append(OnboardingStep.welcome)
             }
             .navigationDestination(for: OnboardingStep.self) { step in
                 switch step {
-                case .welcome1:
-                    WelcomePageView(
-                        page: .hello(name: viewModel.safetyPlan.name)
-                    ) {
-                        path.append(OnboardingStep.welcome2)
-                    }
-                case .welcome2:
-                    WelcomePageView(page: .safetyPlanOverview) {
-                        path.append(OnboardingStep.welcome3)
-                    }
-                case .welcome3:
-                    WelcomePageView(page: .panicButton) {
+                case .welcome:
+                    WelcomePageView(name: viewModel.safetyPlan.name) {
                         path.append(OnboardingStep.infoDisclaimer)
                     }
                 case .infoDisclaimer:

@@ -10,137 +10,112 @@ struct SafetyPlanActivatedView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Safety Plan Activated")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(MindAlertTheme.mindGreen)
-                        .padding(.top)
-
-                    // Coping Strategies Section
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Image(systemName: "tray.full")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 24))
-                            Text("Coping Strategies")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
-
-                        if viewModel.safetyPlan.strategies.isEmpty {
-                            Text("No strategies added")
-                                .foregroundStyle(.secondary)
-                                .italic()
-                        } else {
-                            ForEach(viewModel.safetyPlan.strategies.indices, id: \.self) { index in
-                                HStack(alignment: .top) {
-                                    Text("\(index + 1).")
-                                        .fontWeight(.bold)
-                                    Text(viewModel.safetyPlan.strategies[index])
-                                }
-                                .padding(.vertical, 5)
-                            }
-                        }
+                VStack(spacing: 16) {
+                    // Section 1: Activated confirmation
+                    VStack(alignment: .leading, spacing: 12) {
+                        Image(systemName: "checkmark.circle")
+                            .font(.system(size: 40, weight: .light))
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                        Text("Hi \(viewModel.safetyPlan.name),\nyour \(Text("Safety Plan").foregroundStyle(MindAlertTheme.mindGreen)) is activated.")
+                            .font(.system(size: 28, weight: .semibold))
+                            .foregroundStyle(MindAlertTheme.mindBlack)
                     }
-                    .padding()
+                    .padding(25)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .cornerRadius(20)
 
-                    // Emergency Contacts Section
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Image(systemName: "person.2.wave.2")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 24))
-                            Text("Emergency Contacts")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
+                    // Section 2: Contacts messaged
+                    if !viewModel.safetyPlan.contacts.isEmpty {
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("We have sent\ntext messages to")
+                                .font(.system(size: 24, weight: .semibold))
+                                .foregroundStyle(MindAlertTheme.mindBlack)
 
-                        if viewModel.safetyPlan.contacts.isEmpty {
-                            Text("No contacts added")
-                                .foregroundStyle(.secondary)
-                                .italic()
-                        } else {
-                            ForEach(viewModel.safetyPlan.contacts.indices, id: \.self) { index in
-                                let contact = viewModel.safetyPlan.contacts[index]
-                                HStack {
-                                    Text(contact.name)
-                                        .fontWeight(.semibold)
-                                    Spacer()
-                                    Button {
-                                        viewModel.callContact(at: index)
-                                    } label: {
-                                        HStack {
-                                            Text("Call")
-                                            Image(systemName: "phone.fill")
-                                        }
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 8)
-                                        .background(MindAlertTheme.mindGreen, in: .rect(cornerRadius: 8))
-                                        .foregroundStyle(.white)
-                                        .glassEffect(.regular.tint(MindAlertTheme.greenGlassTint).interactive())
-                                    }
-
-                                    if MFMessageComposeViewController.canSendText() {
-                                        Button {
-                                            smsRecipient = contact.phoneNumber
-                                            showingSMSComposer = true
-                                        } label: {
-                                            HStack {
-                                                Text("SMS")
-                                                Image(systemName: "message.fill")
-                                            }
-                                            .padding(.horizontal, 12)
-                                            .padding(.vertical, 8)
-                                            .background(MindAlertTheme.mindPeach, in: .rect(cornerRadius: 8))
+                            HStack(spacing: 16) {
+                                ForEach(viewModel.safetyPlan.contacts) { contact in
+                                    VStack(spacing: 6) {
+                                        Text(String(contact.name.prefix(2)).uppercased())
+                                            .font(.system(size: 18, weight: .medium))
                                             .foregroundStyle(.white)
-                                            .glassEffect(.regular.tint(MindAlertTheme.peachGlassTint).interactive())
-                                        }
+                                            .frame(width: 50, height: 50)
+                                            .background(MindAlertTheme.mindGreen)
+                                            .clipShape(Circle())
+                                            .overlay(
+                                                Circle().stroke(MindAlertTheme.mindGreen, lineWidth: 2)
+                                            )
+                                        Text(contact.name.components(separatedBy: " ").first ?? contact.name)
+                                            .font(.system(size: 12))
+                                            .foregroundStyle(.secondary)
+                                            .lineLimit(2)
+                                            .multilineTextAlignment(.center)
+                                            .frame(width: 60)
                                     }
                                 }
-                                .padding(.vertical, 5)
                             }
                         }
+                        .padding(25)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(MindAlertTheme.cardBackground)
+                        .cornerRadius(20)
                     }
-                    .padding()
+
+                    // Section 3: Help is on the way
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("And\nhelp is on the way...")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(MindAlertTheme.mindBlack)
+                        Image(systemName: "car.side")
+                            .font(.system(size: 28))
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                    }
+                    .padding(25)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .cornerRadius(20)
 
-                    // Emergency Services Section
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Image(systemName: "cross.case")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 24))
-                            Text("Emergency Services")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
+                    // Section 4: Coping strategies header
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Now\nLet's focus on your \(Text("Coping Strategies").foregroundStyle(MindAlertTheme.mindGreen)).")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(MindAlertTheme.mindBlack)
+                        Image(systemName: "tray.full")
+                            .font(.system(size: 28))
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                    }
+                    .padding(25)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(MindAlertTheme.cardBackground)
+                    .cornerRadius(20)
 
-                        Button {
-                            viewModel.callEmergencyService()
-                        } label: {
-                            HStack {
-                                Text("Call \(viewModel.safetyPlan.emergencyService)")
-                                Spacer()
-                                Image(systemName: "phone.fill")
+                    // Section 5: Activities
+                    if !viewModel.safetyPlan.strategies.isEmpty {
+                        VStack(alignment: .leading, spacing: 16) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "figure.walk")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(MindAlertTheme.mindGreen)
                             }
-                            .padding()
-                            .background(MindAlertTheme.mindPeach, in: .rect(cornerRadius: 12))
-                            .foregroundStyle(.white)
-                            .glassEffect(.regular.tint(MindAlertTheme.peachGlassTint).interactive())
+
+                            Text("Let's try these activities:")
+                                .font(.system(size: 24, weight: .semibold))
+                                .foregroundStyle(MindAlertTheme.mindBlack)
+
+                            VStack(spacing: 10) {
+                                ForEach(viewModel.safetyPlan.strategies, id: \.self) { strategy in
+                                    strategyPill(strategy)
+                                }
+                            }
                         }
+                        .padding(25)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(MindAlertTheme.cardBackground)
+                        .cornerRadius(20)
                     }
-                    .padding()
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
                 }
                 .padding()
             }
             .background(MindAlertTheme.background)
-            .navigationTitle("Safety Plan")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
@@ -156,6 +131,44 @@ struct SafetyPlanActivatedView: View {
                     isPresented: $showingSMSComposer
                 )
             }
+        }
+        .onAppear {
+            sendMessagesToContacts()
+        }
+    }
+
+    private func strategyPill(_ strategy: String) -> some View {
+        HStack {
+            Text(strategy)
+                .font(.system(size: 16, weight: .medium))
+                .foregroundStyle(.white)
+
+            if strategy.lowercased().hasPrefix("http") {
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 14)
+        .background(MindAlertTheme.mindPeach)
+        .cornerRadius(12)
+    }
+
+    private func sendMessagesToContacts() {
+        // Auto-send SMS to all contacts when plan is activated
+        for contact in viewModel.safetyPlan.contacts {
+            if MFMessageComposeViewController.canSendText() {
+                smsRecipient = contact.phoneNumber
+                showingSMSComposer = true
+                break // Show composer for first contact
+            }
+        }
+        // Also trigger emergency service call
+        if !viewModel.safetyPlan.emergencyService.isEmpty {
+            viewModel.callEmergencyService()
         }
     }
 }
