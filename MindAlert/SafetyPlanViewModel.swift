@@ -71,6 +71,17 @@ class SafetyPlanViewModel: ObservableObject {
         UIApplication.shared.open(url)
     }
 
+    func clearSavedPlan() {
+        SafetyPlanStorage.shared.clearSafetyPlan()
+        safetyPlan = SafetyPlan(
+            name: "",
+            strategies: [],
+            contacts: [],
+            emergencyService: "911",
+            emergencyMessage: SafetyPlan.defaultEmergencyMessage
+        )
+    }
+
     func callEmergencyService() {
         guard let url = URL(string: "tel://\(safetyPlan.emergencyService)") else { return }
         UIApplication.shared.open(url)

@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var viewModel: SafetyPlanViewModel
+    var onRerunOnboarding: () -> Void
+    @State private var showRerunConfirmation = false
 
     var body: some View {
         NavigationStack {
@@ -87,10 +89,33 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(MindAlertTheme.cardBackground)
                     .cornerRadius(15)
+                    // Debug
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("Debug", systemImage: "wrench.and.screwdriver")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(.secondary)
+                        Button("Rerun Onboarding") {
+                            showRerunConfirmation = true
+                        }
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(MindAlertTheme.mindPeach)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(MindAlertTheme.cardBackground)
+                    .cornerRadius(15)
                 }
                 .padding()
             }
             .background(MindAlertTheme.background)
+            .alert("Rerun Onboarding?", isPresented: $showRerunConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Rerun", role: .destructive) {
+                    onRerunOnboarding()
+                }
+            } message: {
+                Text("This will clear your current safety plan and restart the onboarding flow.")
+            }
         }
     }
 }

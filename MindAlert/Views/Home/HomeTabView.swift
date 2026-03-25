@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeTabView: View {
     @ObservedObject var viewModel: SafetyPlanViewModel
+    var onRerunOnboarding: () -> Void
     @State private var selectedTab = 1
 
     var body: some View {
@@ -13,7 +14,7 @@ struct HomeTabView: View {
                 HomeView(viewModel: viewModel)
             }
             Tab("Profile", systemImage: "person", value: 2) {
-                ProfileView(viewModel: viewModel)
+                ProfileView(viewModel: viewModel, onRerunOnboarding: onRerunOnboarding)
             }
         }
         .tint(MindAlertTheme.mindGreen)

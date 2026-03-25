@@ -8,9 +8,7 @@ struct GreenButton: ButtonStyle {
             .padding(.vertical, 16)
             .padding(.horizontal, 60)
             .background(
-                configuration.isPressed
-                    ? MindAlertTheme.mindLightGreen
-                    : MindAlertTheme.mindGreen,
+                .clear,
                 in: .rect(cornerRadius: 20)
             )
             .glassEffect(.regular.tint(MindAlertTheme.mindGreen).interactive())

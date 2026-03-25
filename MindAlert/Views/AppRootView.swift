@@ -33,7 +33,12 @@ struct AppRootView: View {
                     }
                 }
             case .home:
-                HomeTabView(viewModel: viewModel)
+                HomeTabView(viewModel: viewModel) {
+                    viewModel.clearSavedPlan()
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        appFlow = .onboarding
+                    }
+                }
             }
         }
     }

@@ -5,21 +5,23 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                Text("Hello ")
-                    .font(.system(size: 40, weight: .bold))
-                + Text(viewModel.safetyPlan.name)
-                    .font(.system(size: 40, weight: .bold))
-                    .foregroundColor(MindAlertTheme.mindGreen)
+            ZStack {
+                MindAlertTheme.background.ignoresSafeArea()
+                VStack(alignment: .leading) {
+                    Text("Hello ")
+                        .font(.system(size: 40, weight: .bold))
+                    + Text(viewModel.safetyPlan.name)
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(MindAlertTheme.mindGreen)
 
-                Spacer()
+                    Spacer()
 
-                PanicButton(viewModel: viewModel)
+                    PanicButton(viewModel: viewModel)
 
-                Spacer()
+                    Spacer()
+                }
+                .padding()
             }
-            .padding()
-            .background(MindAlertTheme.background)
         }
     }
 }

@@ -12,10 +12,10 @@ struct PeachButton: ButtonStyle {
             .padding(.horizontal, 30)
             .frame(maxWidth: fullWidth ? .infinity : nil, alignment: .leading)
             .background(
-                (isSelected ? MindAlertTheme.mindPeach : MindAlertTheme.mindLightPeach),
+                .clear,
                 in: .rect(cornerRadius: 20)
             )
-            .glassEffect(.regular.tint(MindAlertTheme.mindPeach).interactive())
+            .glassEffect(.regular.tint(isSelected ? MindAlertTheme.mindPeach : MindAlertTheme.mindLightPeach).interactive())
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(duration: 0.2), value: configuration.isPressed)
     }
