@@ -7,7 +7,7 @@ struct CompleteView: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                 HStack {
                     Spacer()
                     OnboardingProgressIndicator(totalSteps: 3, currentStep: 3)
@@ -15,37 +15,41 @@ struct CompleteView: View {
                 }
 
                 Divider()
+                    .background(MindAlertTheme.borderSeparator)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
                         // Checkmark + congratulations
                         HStack {
                             Spacer()
-                            VStack(spacing: 12) {
+                            VStack(spacing: MindAlertTheme.Spacing._12) {
                                 Image(systemName: "checkmark.circle")
-                                    .font(.system(size: 50, weight: .light))
+                                    .font(.system(size: 48, weight: .light))
                                     .foregroundStyle(MindAlertTheme.mindGreen)
                                 Text("You did it,\n\(viewModel.safetyPlan.name)!")
-                                    .font(.system(size: 32, weight: .semibold))
-                                    .foregroundStyle(MindAlertTheme.mindBlack)
+                                    .font(.maLargeTitle)
+                                    .foregroundStyle(MindAlertTheme.textPrimary)
                                     .multilineTextAlignment(.center)
                             }
                             Spacer()
                         }
 
                         // Panic Button explanation card
-                        VStack(alignment: .leading, spacing: 16) {
-                            Text("A \(Text("Panic Button").foregroundStyle(MindAlertTheme.mindPeach)) is now available for you.")
-                                .font(.system(size: 24, weight: .semibold))
-                                .foregroundStyle(MindAlertTheme.mindBlack)
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                            (Text("A ")
+                                .foregroundStyle(MindAlertTheme.textPrimary)
+                            + Text("Panic Button")
+                                .foregroundStyle(MindAlertTheme.mindPeach)
+                            + Text(" is now available for you.")
+                                .foregroundStyle(MindAlertTheme.textPrimary))
+                            .font(.maPageHeaderSmall)
 
                             // Nested card with button preview
-                            VStack(spacing: 12) {
+                            VStack(spacing: MindAlertTheme.Spacing._12) {
                                 Text("It looks like this.")
-                                    .font(.system(size: 16, weight: .medium))
-                                    .foregroundStyle(.secondary)
+                                    .font(.maCaption)
+                                    .foregroundStyle(MindAlertTheme.textSecondary)
 
-                                // Logo circle
                                 ZStack {
                                     Circle()
                                         .fill(MindAlertTheme.mindGreen)
@@ -57,29 +61,33 @@ struct CompleteView: View {
                                 }
 
                                 Text("To activate your Safety Plan,\n**press and hold this button for 3 seconds** during a suicidal crisis.")
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundStyle(MindAlertTheme.mindBlack)
+                                    .font(.maCaption)
+                                    .foregroundStyle(MindAlertTheme.textPrimary)
                                     .multilineTextAlignment(.center)
                             }
-                            .padding(20)
+                            .padding(MindAlertTheme.Spacing._24)
                             .frame(maxWidth: .infinity)
                             .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(MindAlertTheme.background)
+                                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
+                                    .fill(MindAlertTheme.lightGray)
                             )
                         }
-                        .padding(25)
-                        .background(
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(MindAlertTheme.cardBackground)
-                        )
+                        .mindAlertCard()
 
                         // Post-activation info
-                        Text("After the plan is activated, we will \(Text("message your emergency contacts").foregroundStyle(MindAlertTheme.mindGreen)) and \(Text("notify your emergency services").foregroundStyle(MindAlertTheme.mindPeach)).")
-                            .font(.system(size: 28, weight: .semibold))
-                            .foregroundStyle(MindAlertTheme.mindBlack)
+                        (Text("After the plan is activated, we will ")
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                        + Text("message your emergency contacts")
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                        + Text(" and ")
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                        + Text("notify your emergency services")
+                            .foregroundStyle(MindAlertTheme.mindPeach)
+                        + Text(".")
+                            .foregroundStyle(MindAlertTheme.textPrimary))
+                        .font(.maSplashBody)
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, MindAlertTheme.Spacing._4)
                 }
 
                 HStack {
@@ -91,9 +99,9 @@ struct CompleteView: View {
                     .buttonStyle(GreenButton())
                     Spacer()
                 }
-                .padding(.bottom)
+                .padding(.bottom, MindAlertTheme.Spacing._8)
             }
-            .padding(20)
+            .padding(MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }

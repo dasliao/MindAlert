@@ -6,19 +6,20 @@ struct InfoAndDisclaimer: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 15) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
+                // Header
+                HStack(spacing: MindAlertTheme.Spacing._12) {
                     Image(systemName: "square.fill.text.grid.1x2")
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .font(.system(size: 36, weight: .regular))
+                        .font(.system(size: 32))
                     Text("Info and Disclaimer")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundStyle(MindAlertTheme.mindBlack)
+                        .font(.maHeadline)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, MindAlertTheme.Spacing._24)
 
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: MindAlertTheme.Spacing._16) {
                         disclaimerCard(
                             number: 1,
                             text: "You can complete this plan entirely on your own, with someone you trust, or your doctor/mental health provider."
@@ -32,7 +33,7 @@ struct InfoAndDisclaimer: View {
                             text: "**Trigger Warning:** Suicidal crisis is mentioned throughout the setup process. Please proceed with caution or with supervision from a professional."
                         )
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, MindAlertTheme.Spacing._24)
                 }
 
                 Spacer()
@@ -43,25 +44,23 @@ struct InfoAndDisclaimer: View {
                         .buttonStyle(GreenButton())
                     Spacer()
                 }
-                .padding(.bottom)
+                .padding(.bottom, MindAlertTheme.Spacing._16)
             }
-            .padding(20)
+            .padding(.vertical, MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }
 
     private func disclaimerCard(number: Int, text: LocalizedStringKey) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
             Text("\(number)")
-                .font(.system(size: 40, weight: .light))
+                .font(.system(size: 36, weight: .light))
                 .foregroundStyle(MindAlertTheme.mindLightGreen)
             Text(text)
-                .font(.system(size: 18, weight: .regular))
-                .foregroundStyle(MindAlertTheme.mindBlack)
+                .font(.maBoldBody)
+                .foregroundStyle(MindAlertTheme.textPrimary)
         }
-        .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(MindAlertTheme.cardBackground)
-        .cornerRadius(20)
+        .mindAlertCard()
     }
 }

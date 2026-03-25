@@ -7,29 +7,32 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 MindAlertTheme.background.ignoresSafeArea()
-                VStack(alignment: .leading, spacing: 0) {
-                    (Text("Hello, ")
-                        .font(.system(size: 40, weight: .bold))
-                    + Text("\(viewModel.safetyPlan.name)!")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(MindAlertTheme.mindGreen))
-                    .padding(.horizontal)
-                    .padding(.top)
 
+                VStack(alignment: .leading, spacing: 0) {
+                    // Greeting
+                    (Text("Hello, ")
+                        .foregroundStyle(MindAlertTheme.textPrimary)
+                    + Text("\(viewModel.safetyPlan.name)!")
+                        .foregroundStyle(MindAlertTheme.mindGreen))
+                    .font(.maLargeTitle)
+                    .padding(.horizontal, MindAlertTheme.Spacing._24)
+                    .padding(.top, MindAlertTheme.Spacing._16)
+
+                    // Panic button
                     PanicButton(viewModel: viewModel)
 
+                    // Instruction text
                     (Text("Press the button for 3 seconds\nto activate your ")
-                        .font(.system(size: 18))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(MindAlertTheme.textSecondary)
                     + Text("Safety Plan")
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(.secondary)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(MindAlertTheme.textSecondary)
                     + Text(".")
-                        .font(.system(size: 18))
-                        .foregroundStyle(.secondary))
+                        .foregroundStyle(MindAlertTheme.textSecondary))
+                    .font(.maBoldBody)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, MindAlertTheme.Spacing._24)
                 }
             }
         }

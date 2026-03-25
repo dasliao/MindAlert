@@ -10,59 +10,43 @@ struct EmergencyContacts: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                 HStack {
                     Spacer()
                     OnboardingProgressIndicator(totalSteps: 3, currentStep: 2)
                     Spacer()
                 }
-                HStack(spacing: 15) {
+
+                // Section header
+                HStack(spacing: MindAlertTheme.Spacing._12) {
                     Image(systemName: "person.2.wave.2")
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .font(.system(size: 36, weight: .regular))
+                        .font(.system(size: 32))
                     Text("Emergency Contacts")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundStyle(MindAlertTheme.mindBlack)
+                        .font(.maHeadline)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                 }
 
                 Divider()
+                    .background(MindAlertTheme.borderSeparator)
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
                     Text("Well done \(viewModel.safetyPlan.name),")
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                     Text("Let's set up your emergency contacts")
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                 }
-                .foregroundStyle(MindAlertTheme.mindBlack)
-                .font(.system(size: 32, weight: .semibold))
+                .font(.maSplashBody)
 
-                // Contact avatars row
+                // Contact cards
                 if !viewModel.safetyPlan.contacts.isEmpty {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
+                        HStack(spacing: MindAlertTheme.Spacing._12) {
                             ForEach(viewModel.safetyPlan.contacts) { contact in
-                                VStack(spacing: 4) {
-                                    Text(String(contact.name.prefix(2)).uppercased())
-                                        .font(.system(size: 18, weight: .medium))
-                                        .foregroundStyle(.white)
-                                        .frame(width: 50, height: 50)
-                                        .background(MindAlertTheme.mindGreen)
-                                        .clipShape(Circle())
-                                    Text(contact.name)
-                                        .font(.system(size: 12))
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(1)
-                                }
-                                .contextMenu {
-                                    Button(role: .destructive) {
-                                        if let idx = viewModel.safetyPlan.contacts.firstIndex(where: { $0.id == contact.id }) {
-                                            viewModel.removeContact(at: idx)
-                                        }
-                                    } label: {
-                                        Label("Remove", systemImage: "trash")
-                                    }
-                                }
+                                contactCard(contact)
                             }
 
-                            // Add button
+                            // Add more button
                             Button {
                                 showingContactPicker = true
                             } label: {
@@ -72,7 +56,7 @@ struct EmergencyContacts: View {
                                     .frame(width: 50, height: 50)
                                     .overlay(
                                         Circle()
-                                            .stroke(MindAlertTheme.mindLightGreen, lineWidth: 1.5)
+                                            .stroke(MindAlertTheme.borderSeparator, lineWidth: 1.5)
                                     )
                             }
                         }
@@ -81,14 +65,14 @@ struct EmergencyContacts: View {
                     Button {
                         showingContactPicker = true
                     } label: {
-                        HStack(spacing: 8) {
+                        HStack(spacing: MindAlertTheme.Spacing._8) {
                             Image(systemName: "person.badge.plus")
                             Text("Add Contact")
                         }
-                        .font(.system(size: 16, weight: .medium))
+                        .font(.maBoldBody)
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
+                        .padding(.vertical, MindAlertTheme.Spacing._12)
+                        .padding(.horizontal, MindAlertTheme.Spacing._24)
                         .overlay(
                             Capsule()
                                 .stroke(MindAlertTheme.mindGreen, lineWidth: 1.5)
@@ -97,26 +81,26 @@ struct EmergencyContacts: View {
                 }
 
                 // Message template card
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                     Text("Message Template:")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.maBoldBody)
                         .foregroundStyle(MindAlertTheme.mindPeach)
 
                     Text(viewModel.safetyPlan.resolvedEmergencyMessage)
-                        .font(.system(size: 16, weight: .regular))
-                        .foregroundStyle(MindAlertTheme.mindBlack)
+                        .font(.maCaption)
+                        .foregroundStyle(MindAlertTheme.textSecondary)
 
                     Button {
                         showingEditMessage = true
                     } label: {
-                        HStack(spacing: 6) {
+                        HStack(spacing: MindAlertTheme.Spacing._4) {
                             Image(systemName: "square.and.pencil")
                             Text("Edit Message")
                         }
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.maCaption)
                         .foregroundStyle(MindAlertTheme.mindPeach)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
+                        .padding(.vertical, MindAlertTheme.Spacing._8)
+                        .padding(.horizontal, MindAlertTheme.Spacing._16)
                         .overlay(
                             Capsule()
                                 .stroke(MindAlertTheme.mindPeach, lineWidth: 1.5)
@@ -124,11 +108,7 @@ struct EmergencyContacts: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .padding(20)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(MindAlertTheme.cardBackground)
-                )
+                .mindAlertCard()
 
                 Spacer()
 
@@ -138,8 +118,9 @@ struct EmergencyContacts: View {
                         .buttonStyle(GreenButton())
                     Spacer()
                 }
+                .padding(.bottom, MindAlertTheme.Spacing._8)
             }
-            .padding(20)
+            .padding(MindAlertTheme.Spacing._24)
             .sheet(isPresented: $showingContactPicker) {
                 ContactPickerView { name, phone in
                     let existingPhones = Set(viewModel.safetyPlan.contacts.map { $0.phoneNumber })
@@ -156,6 +137,30 @@ struct EmergencyContacts: View {
             }
         }
         .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private func contactCard(_ contact: SafetyPlan.Contact) -> some View {
+        VStack(spacing: MindAlertTheme.Spacing._4) {
+            Text(String(contact.name.prefix(2)).uppercased())
+                .font(.maBoldBody)
+                .foregroundStyle(MindAlertTheme.staticWhite)
+                .frame(width: 50, height: 50)
+                .background(MindAlertTheme.mindGreen)
+                .clipShape(Circle())
+            Text(contact.name.components(separatedBy: " ").first ?? contact.name)
+                .font(.maTabCaption)
+                .foregroundStyle(MindAlertTheme.textSecondary)
+                .lineLimit(1)
+        }
+        .contextMenu {
+            Button(role: .destructive) {
+                if let idx = viewModel.safetyPlan.contacts.firstIndex(where: { $0.id == contact.id }) {
+                    viewModel.removeContact(at: idx)
+                }
+            } label: {
+                Label("Remove", systemImage: "trash")
+            }
+        }
     }
 }
 

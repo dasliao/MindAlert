@@ -7,24 +7,22 @@ struct OnboardingProgressIndicator: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(1...totalSteps, id: \.self) { step in
-                // Circle with number
                 ZStack {
                     Circle()
                         .fill(step <= currentStep ? MindAlertTheme.mindGreen : Color.clear)
                         .frame(width: 30, height: 30)
                     Circle()
-                        .stroke(step <= currentStep ? MindAlertTheme.mindGreen : MindAlertTheme.mindLightGreen.opacity(0.5), lineWidth: 2)
+                        .stroke(step <= currentStep ? MindAlertTheme.mindGreen : MindAlertTheme.borderSeparator, lineWidth: 2)
                         .frame(width: 30, height: 30)
                     Text("\(step)")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(step <= currentStep ? .white : MindAlertTheme.mindLightGreen.opacity(0.5))
+                        .font(.maTabCaption)
+                        .foregroundStyle(step <= currentStep ? MindAlertTheme.staticWhite : MindAlertTheme.textTertiary)
                 }
 
-                // Connecting line (not after last step)
                 if step < totalSteps {
                     Rectangle()
-                        .fill(step < currentStep ? MindAlertTheme.mindGreen : MindAlertTheme.mindLightGreen.opacity(0.3))
-                        .frame(height: 3)
+                        .fill(step < currentStep ? MindAlertTheme.mindGreen : MindAlertTheme.borderSeparator)
+                        .frame(height: 2)
                 }
             }
         }

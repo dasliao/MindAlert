@@ -4,35 +4,32 @@ struct ResourcesView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
                     Text("Resources")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.maLargeTitle)
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .padding(.top)
+                        .padding(.top, MindAlertTheme.Spacing._8)
 
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("If you or someone you know is in crisis, please reach out:")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundStyle(MindAlertTheme.mindBlack)
+                    Text("If you or someone you know is in crisis, please reach out:")
+                        .font(.maSafetyPlanBody)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
 
+                    VStack(spacing: MindAlertTheme.Spacing._12) {
                         resourceCard(
                             title: "988 Suicide & Crisis Lifeline",
                             detail: "Call or text 988",
                             icon: "phone.fill"
                         )
-
                         resourceCard(
                             title: "Crisis Text Line",
                             detail: "Text HOME to 741741",
                             icon: "message.fill"
                         )
-
                         resourceCard(
                             title: "SAMHSA National Helpline",
                             detail: "1-800-662-4357",
                             icon: "heart.fill"
                         )
-
                         resourceCard(
                             title: "Veterans Crisis Line",
                             detail: "Call 988, then press 1",
@@ -41,36 +38,33 @@ struct ResourcesView: View {
                     }
 
                     Text("More resources coming soon.")
-                        .font(.system(size: 16))
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 10)
+                        .font(.maCaption)
+                        .foregroundStyle(MindAlertTheme.textTertiary)
                 }
-                .padding()
+                .padding(MindAlertTheme.Spacing._24)
             }
-            .background(MindAlertTheme.background)
+            .background(MindAlertTheme.background.ignoresSafeArea())
         }
     }
 
     private func resourceCard(title: String, detail: String, icon: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: MindAlertTheme.Spacing._16) {
             Image(systemName: icon)
                 .foregroundStyle(MindAlertTheme.mindGreen)
                 .font(.system(size: 24))
-                .frame(width: 44)
+                .frame(width: 40)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
                 Text(title)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(MindAlertTheme.mindBlack)
+                    .font(.maBoldBody)
+                    .foregroundStyle(MindAlertTheme.textPrimary)
                 Text(detail)
-                    .font(.system(size: 16))
-                    .foregroundStyle(.secondary)
+                    .font(.maCaption)
+                    .foregroundStyle(MindAlertTheme.textSecondary)
             }
 
             Spacer()
         }
-        .padding()
-        .background(MindAlertTheme.cardBackground)
-        .cornerRadius(15)
+        .mindAlertCard()
     }
 }

@@ -7,46 +7,61 @@ struct WelcomePageView: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
-                // Header
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
+                // Header greeting
                 HStack(spacing: 0) {
                     Text("Hello, ")
-                        .font(.system(size: 40, weight: .bold))
+                        .font(.maLargeTitle)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                     Text("\(name)!")
-                        .font(.system(size: 40, weight: .bold))
+                        .font(.maLargeTitle)
                         .foregroundStyle(MindAlertTheme.mindGreen)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, MindAlertTheme.Spacing._24)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
                         // Description
-                        Text("\(Text("Mind").foregroundColor(MindAlertTheme.mindGreen))\(Text("Alert").foregroundColor(MindAlertTheme.mindPeach)) helps you prepare a \(Text("Safety Plan").foregroundColor(MindAlertTheme.mindGreen)) for suicidal crisis so you can stay safe.")
-                            .font(.system(size: 28, weight: .semibold))
+                        (Text("Mind")
+                            .foregroundColor(MindAlertTheme.mindGreen)
+                        + Text("Alert")
+                            .foregroundColor(MindAlertTheme.mindPeach)
+                        + Text(" helps you prepare a ")
+                            .foregroundColor(MindAlertTheme.textPrimary)
+                        + Text("Safety Plan")
+                            .foregroundColor(MindAlertTheme.mindGreen)
+                        + Text(" for suicidal crisis so you can stay safe.")
+                            .foregroundColor(MindAlertTheme.textPrimary))
+                        .font(.maSplashBody)
 
-                        // Safety Plan card
-                        VStack(alignment: .leading, spacing: 20) {
+                        // Safety Plan features card
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
                             Text("Your Safety Plan\nwill include:")
-                                .font(.system(size: 24, weight: .semibold))
+                                .font(.maPageHeaderSmall)
+                                .foregroundStyle(MindAlertTheme.textPrimary)
 
-                            VStack(alignment: .leading, spacing: 24) {
+                            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
                                 featureRow(icon: "tray.full", text: "Links to your coping strategies")
                                 featureRow(icon: "person.2.wave.2", text: "Alerting your emergency contact(s)")
                                 featureRow(icon: "cross.case", text: "Alerting medical emergency services")
                             }
                         }
-                        .padding(25)
-                        .background(
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(MindAlertTheme.cardBackground)
-                        )
+                        .mindAlertCard()
 
                         // Panic button info
-                        Text("After creating your \(Text("Safety Plan").foregroundStyle(MindAlertTheme.mindGreen)), a \(Text("Panic Button").foregroundStyle(MindAlertTheme.mindPeach)) will become available.")
-                            .font(.system(size: 28, weight: .semibold))
-                            .foregroundStyle(MindAlertTheme.mindBlack)
+                        (Text("After creating your ")
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                        + Text("Safety Plan")
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                        + Text(", a ")
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                        + Text("Panic Button")
+                            .foregroundStyle(MindAlertTheme.mindPeach)
+                        + Text(" will become available.")
+                            .foregroundStyle(MindAlertTheme.textPrimary))
+                        .font(.maSplashBody)
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, MindAlertTheme.Spacing._24)
                 }
 
                 HStack {
@@ -55,22 +70,22 @@ struct WelcomePageView: View {
                         .buttonStyle(GreenButton())
                     Spacer()
                 }
-                .padding(.bottom)
+                .padding(.bottom, MindAlertTheme.Spacing._16)
             }
-            .padding(20)
+            .padding(.vertical, MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }
 
     private func featureRow(icon: String, text: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: MindAlertTheme.Spacing._16) {
             Image(systemName: icon)
                 .foregroundStyle(MindAlertTheme.mindGreen)
-                .font(.system(size: 28, weight: .regular))
-                .frame(width: 40)
+                .font(.system(size: 24))
+                .frame(width: 32)
             Text(text)
-                .font(.system(size: 16, weight: .medium))
-                .foregroundStyle(MindAlertTheme.mindBlack)
+                .font(.maBoldBody)
+                .foregroundStyle(MindAlertTheme.textPrimary)
         }
     }
 }

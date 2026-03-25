@@ -6,16 +6,15 @@ struct PeachButton: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 20, weight: .semibold))
-            .foregroundStyle(.white)
-            .padding(.vertical, 16)
-            .padding(.horizontal, 30)
+            .font(.maBoldBody)
+            .foregroundStyle(MindAlertTheme.staticWhite)
+            .padding(.vertical, MindAlertTheme.Spacing._16)
+            .padding(.horizontal, MindAlertTheme.Spacing._32)
             .frame(maxWidth: fullWidth ? .infinity : nil, alignment: .leading)
             .background(
-                .clear,
-                in: .rect(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
+                    .fill(isSelected ? MindAlertTheme.mindPeach : MindAlertTheme.mindLightPeach)
             )
-            .glassEffect(.regular.tint(isSelected ? MindAlertTheme.mindPeach : MindAlertTheme.mindLightPeach).interactive())
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(duration: 0.2), value: configuration.isPressed)
     }
