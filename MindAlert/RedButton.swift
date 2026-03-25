@@ -1,56 +1,22 @@
-//
-//  RedButton.swift
-//  MindAlert
-//
-//  Created by DASHAN LIAO on 4/17/22.
-//
-
-import Foundation
 import SwiftUI
 
-struct RedButton: ButtonStyle {
+struct PeachButton: ButtonStyle {
+    var isSelected: Bool = true
+    var fullWidth: Bool = false
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(20)
+            .font(.system(size: 20, weight: .semibold))
+            .foregroundStyle(.white)
+            .padding(.vertical, 16)
             .padding(.horizontal, 30)
-            .background(configuration.isPressed ? Color("MindLightPeach") : Color("MindPeach"))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .font(.system(size: 20, weight: .semibold))
-            .scaleEffect(configuration.isPressed ? 1.1 : 1)
-            .animation(.easeInOut(duration: 0.3), value: configuration.isPressed)
-            .frame(height: 60, alignment: .center)
+            .frame(maxWidth: fullWidth ? .infinity : nil, alignment: .leading)
+            .background(
+                .clear,
+                in: .rect(cornerRadius: 20)
+            )
+            .glassEffect(.regular.tint(isSelected ? MindAlertTheme.mindPeach : MindAlertTheme.mindLightPeach).interactive())
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .animation(.spring(duration: 0.2), value: configuration.isPressed)
     }
 }
-
-struct RedButton911: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(20)
-            .padding(.leading, 20)
-            .padding(.trailing, 150)
-            .background(configuration.isPressed ? Color("MindLightPeach") : Color("MindPeach"))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .font(.system(size: 20, weight: .semibold))
-            .scaleEffect(configuration.isPressed ? 1.1 : 1)
-            .animation(.easeInOut(duration: 0.3), value: configuration.isPressed)
-            .frame(height: 60, alignment: .center)
-    }
-}
-
-struct RedButtonOtherWay: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(20)
-            .padding(.leading, 20)
-            .background(configuration.isPressed ? Color("MindPeach") : Color("MindLightPeach"))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .font(.system(size: 20, weight: .semibold))
-            .scaleEffect(configuration.isPressed ? 1.1 : 1)
-            .animation(.easeInOut(duration: 0.3), value: configuration.isPressed)
-            .frame(height: 60, alignment: .center)
-    }
-}
-

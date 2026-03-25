@@ -1,20 +1,10 @@
-//
-//  ContentView.swift
-//  MindAlert
-//
-//  Created by DASHAN LIAO on 4/17/22.
-//
-
 import SwiftUI
 
+// ContentView is no longer used — AppRootView is the new entry point.
+// This file is kept temporarily to avoid Xcode project reference issues.
+// It will be removed during folder reorganization (Phase 9).
 struct ContentView: View {
     var body: some View {
-        nameView()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        AppRootView()
     }
 }
