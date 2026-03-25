@@ -1,21 +1,11 @@
 import SwiftUI
-import Contacts
+import ContactsUI
 
 struct EmergencyContacts: View {
     @ObservedObject var viewModel: SafetyPlanViewModel
     @State private var showingContactPicker = false
     @State private var showingEditMessage = false
-    @State private var phoneContacts: [PhoneContact] = []
-    @State private var selectedContactIDs: Set<String> = []
-    @State private var contactsAccessGranted = false
     var onNext: () -> Void
-
-    struct PhoneContact: Identifiable {
-        let id: String
-        let name: String
-        let phoneNumber: String
-        let initials: String
-    }
 
     var body: some View {
         ZStack {
@@ -60,6 +50,15 @@ struct EmergencyContacts: View {
                                         .font(.system(size: 12))
                                         .foregroundStyle(.secondary)
                                         .lineLimit(1)
+                                }
+                                .contextMenu {
+                                    Button(role: .destructive) {
+                                        if let idx = viewModel.safetyPlan.contacts.firstIndex(where: { $0.id == contact.id }) {
+                                            viewModel.removeContact(at: idx)
+                                        }
+                                    } label: {
+                                        Label("Remove", systemImage: "trash")
+                                    }
                                 }
                             }
 
@@ -142,10 +141,12 @@ struct EmergencyContacts: View {
             }
             .padding(20)
             .sheet(isPresented: $showingContactPicker) {
-                ContactPickerSheet(
-                    viewModel: viewModel,
-                    isPresented: $showingContactPicker
-                )
+                ContactPickerView { name, phone in
+                    let existingPhones = Set(viewModel.safetyPlan.contacts.map { $0.phoneNumber })
+                    if !existingPhones.contains(phone) {
+                        viewModel.addContact(name: name, phoneNumber: phone)
+                    }
+                }
             }
             .sheet(isPresented: $showingEditMessage) {
                 EditMessageSheet(
@@ -158,149 +159,36 @@ struct EmergencyContacts: View {
     }
 }
 
-// MARK: - Contact Picker Sheet
-struct ContactPickerSheet: View {
-    @ObservedObject var viewModel: SafetyPlanViewModel
-    @Binding var isPresented: Bool
-    @State private var phoneContacts: [EmergencyContacts.PhoneContact] = []
-    @State private var selectedIDs: Set<String> = []
-    @State private var permissionDenied = false
+// MARK: - System Contact Picker (no permissions needed)
+struct ContactPickerView: UIViewControllerRepresentable {
+    var onContactSelected: (String, String) -> Void
 
-    var body: some View {
-        NavigationStack {
-            Group {
-                if permissionDenied {
-                    VStack(spacing: 16) {
-                        Image(systemName: "person.crop.circle.badge.exclamationmark")
-                            .font(.system(size: 50))
-                            .foregroundStyle(.secondary)
-                        Text("Contacts access is required to add emergency contacts.")
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(.secondary)
-                        Text("Please enable it in Settings > Privacy > Contacts.")
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 14))
-                            .foregroundStyle(.tertiary)
-                    }
-                    .padding()
-                } else if phoneContacts.isEmpty {
-                    ProgressView("Loading contacts...")
-                } else {
-                    List {
-                        Section("Choose the Contacts") {
-                            ForEach(phoneContacts) { contact in
-                                Button {
-                                    toggleSelection(contact)
-                                } label: {
-                                    HStack(spacing: 14) {
-                                        // Avatar
-                                        Text(contact.initials)
-                                            .font(.system(size: 16, weight: .medium))
-                                            .foregroundStyle(.white)
-                                            .frame(width: 44, height: 44)
-                                            .background(MindAlertTheme.mindGreen)
-                                            .clipShape(Circle())
-
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text(contact.name)
-                                                .font(.system(size: 18, weight: .semibold))
-                                                .foregroundStyle(MindAlertTheme.mindBlack)
-                                            Text(contact.phoneNumber)
-                                                .font(.system(size: 14))
-                                                .foregroundStyle(.secondary)
-                                        }
-
-                                        Spacer()
-
-                                        Image(systemName: selectedIDs.contains(contact.id) ? "checkmark.circle.fill" : "circle")
-                                            .foregroundStyle(MindAlertTheme.mindGreen)
-                                            .font(.system(size: 24))
-                                    }
-                                    .padding(.vertical, 4)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Add Contacts")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { isPresented = false }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Confirm") {
-                        addSelectedContacts()
-                        isPresented = false
-                    }
-                    .disabled(selectedIDs.isEmpty)
-                }
-            }
-        }
-        .onAppear {
-            loadContacts()
-        }
+    func makeUIViewController(context: Context) -> CNContactPickerViewController {
+        let picker = CNContactPickerViewController()
+        picker.delegate = context.coordinator
+        picker.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
+        return picker
     }
 
-    private func toggleSelection(_ contact: EmergencyContacts.PhoneContact) {
-        if selectedIDs.contains(contact.id) {
-            selectedIDs.remove(contact.id)
-        } else {
-            selectedIDs.insert(contact.id)
-        }
+    func updateUIViewController(_ uiViewController: CNContactPickerViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onContactSelected: onContactSelected)
     }
 
-    private func addSelectedContacts() {
-        let existingPhones = Set(viewModel.safetyPlan.contacts.map { $0.phoneNumber })
-        for contact in phoneContacts where selectedIDs.contains(contact.id) {
-            if !existingPhones.contains(contact.phoneNumber) {
-                viewModel.addContact(name: contact.name, phoneNumber: contact.phoneNumber)
-            }
-        }
-    }
+    class Coordinator: NSObject, CNContactPickerDelegate {
+        let onContactSelected: (String, String) -> Void
 
-    private func loadContacts() {
-        let store = CNContactStore()
-        store.requestAccess(for: .contacts) { granted, _ in
-            DispatchQueue.main.async {
-                guard granted else {
-                    permissionDenied = true
-                    return
-                }
-                contactsAccessGranted = true
-                fetchContacts(store: store)
-            }
-        }
-    }
-
-    @State private var contactsAccessGranted = false
-
-    private func fetchContacts(store: CNContactStore) {
-        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
-        let request = CNContactFetchRequest(keysToFetch: keys)
-        request.sortOrder = .givenName
-
-        var results: [EmergencyContacts.PhoneContact] = []
-        do {
-            try store.enumerateContacts(with: request) { contact, _ in
-                guard let phone = contact.phoneNumbers.first?.value.stringValue else { return }
-                let name = "\(contact.givenName) \(contact.familyName)".trimmingCharacters(in: .whitespaces)
-                guard !name.isEmpty else { return }
-                let initials = String(contact.givenName.prefix(1) + contact.familyName.prefix(1)).uppercased()
-                results.append(EmergencyContacts.PhoneContact(
-                    id: contact.identifier,
-                    name: name,
-                    phoneNumber: phone,
-                    initials: initials.isEmpty ? "?" : initials
-                ))
-            }
-        } catch {
-            // Handle error silently
+        init(onContactSelected: @escaping (String, String) -> Void) {
+            self.onContactSelected = onContactSelected
         }
 
-        DispatchQueue.main.async {
-            phoneContacts = results
+        func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+            let name = "\(contact.givenName) \(contact.familyName)".trimmingCharacters(in: .whitespaces)
+            let phone = contact.phoneNumbers.first?.value.stringValue ?? ""
+            if !name.isEmpty && !phone.isEmpty {
+                onContactSelected(name, phone)
+            }
         }
     }
 }

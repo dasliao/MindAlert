@@ -69,11 +69,11 @@ struct PanicButton: View {
 
         // Countdown ticks: 3 -> 2 -> 1
         var tick = 0
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             Task { @MainActor in
                 tick += 1
                 if tick >= 3 {
-                    timer.invalidate()
+                    countdownTimer?.invalidate()
                     countdownTimer = nil
                     // Activated
                     withAnimation(.easeOut(duration: 0.2)) {

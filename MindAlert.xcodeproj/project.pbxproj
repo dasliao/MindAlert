@@ -24,7 +24,6 @@
 		91A5A2B6280C3DA900AE97D3 /* EmergencyContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B5280C3DA900AE97D3 /* EmergencyContacts.swift */; };
 		91A5A2B8280C467900AE97D3 /* EmergencyServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2B7280C467900AE97D3 /* EmergencyServicesView.swift */; };
 		91A5A2C4280C7E3400AE97D3 /* CompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5A2C3280C7E3400AE97D3 /* CompleteView.swift */; };
-		/* New files */
 		CA000001280D000100000001 /* SafetyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000002280D000100000001 /* SafetyPlan.swift */; };
 		CA000003280D000100000002 /* SafetyPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000004280D000100000002 /* SafetyPlanViewModel.swift */; };
 		CA000005280D000100000003 /* MindAlertTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA000006280D000100000003 /* MindAlertTheme.swift */; };
@@ -61,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		917BCE402F745AC500A07B89 /* MindAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MindAlert.entitlements; sourceTree = "<group>"; };
 		91A5A26C280C032200AE97D3 /* MindAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91A5A26F280C032200AE97D3 /* MindAlertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindAlertApp.swift; sourceTree = "<group>"; };
 		91A5A271280C032200AE97D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,7 +81,6 @@
 		91A5A2B5280C3DA900AE97D3 /* EmergencyContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContacts.swift; sourceTree = "<group>"; };
 		91A5A2B7280C467900AE97D3 /* EmergencyServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyServicesView.swift; sourceTree = "<group>"; };
 		91A5A2C3280C7E3400AE97D3 /* CompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteView.swift; sourceTree = "<group>"; };
-		/* New file references */
 		CA000002280D000100000001 /* SafetyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyPlan.swift; sourceTree = "<group>"; };
 		CA000004280D000100000002 /* SafetyPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyPlanViewModel.swift; sourceTree = "<group>"; };
 		CA000006280D000100000003 /* MindAlertTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindAlertTheme.swift; sourceTree = "<group>"; };
@@ -148,6 +147,7 @@
 		91A5A26E280C032200AE97D3 /* MindAlert */ = {
 			isa = PBXGroup;
 			children = (
+				917BCE402F745AC500A07B89 /* MindAlert.entitlements */,
 				91A5A26F280C032200AE97D3 /* MindAlertApp.swift */,
 				CA000002280D000100000001 /* SafetyPlan.swift */,
 				CA000004280D000100000002 /* SafetyPlanViewModel.swift */,
@@ -552,24 +552,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MindAlert/MindAlert.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MindAlert/Preview Content\"";
 				DEVELOPMENT_TEAM = D4N975E759;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MindAlert;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlert;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.dasapp.MindAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
@@ -582,24 +585,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MindAlert/MindAlert.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MindAlert/Preview Content\"";
 				DEVELOPMENT_TEAM = D4N975E759;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MindAlert;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = tech.MindAlert.MindAlert;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.dasapp.MindAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
