@@ -9,29 +9,32 @@ struct CopingStrategiesYes: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                 HStack {
                     Spacer()
                     OnboardingProgressIndicator(totalSteps: 3, currentStep: 1)
                     Spacer()
                 }
-                HStack(spacing: 15) {
+
+                // Section header
+                HStack(spacing: MindAlertTheme.Spacing._12) {
                     Image(systemName: "tray.full")
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .font(.system(size: 36, weight: .regular))
+                        .font(.system(size: 32))
                     Text("Coping Strategies")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundStyle(MindAlertTheme.mindBlack)
+                        .font(.maHeadline)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                 }
 
                 Divider()
+                    .background(MindAlertTheme.borderSeparator)
 
-                Text("Sounds good,\nlet's list your strategies")
-                    .foregroundStyle(MindAlertTheme.mindBlack)
-                    .font(.system(size: 32, weight: .semibold))
+                Text("Sounds good,\nlet's list your strategies.")
+                    .foregroundStyle(MindAlertTheme.textPrimary)
+                    .font(.maSplashBody)
 
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: MindAlertTheme.Spacing._16) {
                         ForEach(viewModel.safetyPlan.strategies.indices, id: \.self) { index in
                             strategyCard(index: index)
                         }
@@ -45,12 +48,12 @@ struct CopingStrategiesYes: View {
                                 Image(systemName: "plus")
                                 Text("Add Strategies")
                             }
-                            .font(.system(size: 16, weight: .medium))
+                            .font(.maBoldBody)
                             .foregroundStyle(MindAlertTheme.mindPeach)
-                            .padding(.vertical, 12)
+                            .padding(.vertical, MindAlertTheme.Spacing._12)
                             .frame(maxWidth: .infinity)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 20)
+                                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
                                     .stroke(MindAlertTheme.mindPeach, lineWidth: 1.5)
                             )
                         }
@@ -58,25 +61,26 @@ struct CopingStrategiesYes: View {
                 }
 
                 Spacer()
+
                 HStack {
                     Spacer()
                     Button("Confirm") { onNext() }
-                        .buttonStyle(GreenButton())
-                        .opacity(viewModel.safetyPlan.strategies.isEmpty ? 0.5 : 1)
+                        .buttonStyle(GreenButton(disabled: viewModel.safetyPlan.strategies.isEmpty))
                         .disabled(viewModel.safetyPlan.strategies.isEmpty)
                     Spacer()
                 }
+                .padding(.bottom, MindAlertTheme.Spacing._8)
             }
-            .padding(20)
+            .padding(MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }
 
     private func strategyCard(index: Int) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
             Text("Strategy \(index + 1)")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(.secondary)
+                .font(.maCaption)
+                .foregroundStyle(MindAlertTheme.textTertiary)
 
             TextField("Enter strategy", text: Binding(
                 get: {
@@ -88,15 +92,14 @@ struct CopingStrategiesYes: View {
                     viewModel.safetyPlan.strategies[index] = newValue
                 }
             ))
-            .font(.system(size: 18, weight: .semibold))
+            .font(.maHeadline)
+            .foregroundStyle(MindAlertTheme.textPrimary)
 
             Rectangle()
                 .fill(MindAlertTheme.mindPeach.opacity(0.5))
                 .frame(height: 1.5)
         }
-        .padding(20)
-        .background(MindAlertTheme.cardBackground)
-        .cornerRadius(20)
+        .mindAlertCard()
         .contextMenu {
             Button(role: .destructive) {
                 viewModel.removeStrategy(at: index)

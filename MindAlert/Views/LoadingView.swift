@@ -5,14 +5,17 @@ struct LoadingView: View {
         ZStack {
             MindAlertTheme.background
                 .ignoresSafeArea()
-            VStack {
+            VStack(spacing: MindAlertTheme.Spacing._16) {
                 Image("Logo_Color")
-                HStack {
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                HStack(spacing: 0) {
                     Text("Mind")
-                        .font(.title.bold())
+                        .font(.maLargeTitle)
                         .foregroundStyle(MindAlertTheme.mindGreen)
                     Text("Alert")
-                        .font(.title.bold())
+                        .font(.maLargeTitle)
                         .foregroundStyle(MindAlertTheme.mindPeach)
                 }
             }

@@ -7,54 +7,60 @@ struct NameView: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
-                VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
+                // Header
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
                     Text("Welcome to")
-                        .font(.system(size: 40, weight: .bold))
+                        .font(.maLargeTitle)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
                     HStack(spacing: 0) {
                         Text("Mind")
-                            .font(.system(size: 40, weight: .bold))
+                            .font(.maLargeTitle)
                             .foregroundStyle(MindAlertTheme.mindGreen)
                         Text("Alert")
-                            .font(.system(size: 40, weight: .bold))
+                            .font(.maLargeTitle)
                             .foregroundStyle(MindAlertTheme.mindPeach)
                         Text("!")
-                            .font(.system(size: 40, weight: .bold))
+                            .font(.maLargeTitle)
+                            .foregroundStyle(MindAlertTheme.textPrimary)
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, MindAlertTheme.Spacing._24)
 
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 10) {
+                // Name input section
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                     Image(systemName: "person")
-                        .font(.system(size: 40, weight: .regular))
+                        .font(.system(size: 36))
                         .foregroundStyle(MindAlertTheme.mindGreen)
+
                     Text("What should\nwe call you?")
-                        .font(.system(size: 32, weight: .semibold))
+                        .font(.maSplashBody)
+                        .foregroundStyle(MindAlertTheme.textPrimary)
+
                     TextField("Your name", text: Binding(
                         get: { viewModel.safetyPlan.name },
                         set: { viewModel.setName($0) }
                     ))
-                    .font(.system(size: 32, weight: .semibold))
+                    .font(.maSplashBody)
                     .foregroundStyle(MindAlertTheme.mindPeach)
                     .underlineTextField()
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, MindAlertTheme.Spacing._24)
 
                 Spacer()
 
-                VStack(spacing: 12) {
+                // Bottom buttons
+                VStack(spacing: MindAlertTheme.Spacing._12) {
                     Button("Next") { onNext() }
-                        .buttonStyle(GreenButton())
-                    Text("Already have an Account? Sign In")
-                        .fontWeight(.bold)
-                        .foregroundStyle(MindAlertTheme.mindGreen)
-                        .padding(.bottom)
+                        .buttonStyle(GreenButton(disabled: viewModel.safetyPlan.name.trimmingCharacters(in: .whitespaces).isEmpty))
+                        .disabled(viewModel.safetyPlan.name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
                 .frame(maxWidth: .infinity)
+                .padding(.bottom, MindAlertTheme.Spacing._16)
             }
-            .padding(20)
+            .padding(.vertical, MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }

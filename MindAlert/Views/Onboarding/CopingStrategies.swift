@@ -8,60 +8,66 @@ struct CopingStrategies: View {
     var body: some View {
         ZStack {
             MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                 HStack {
                     Spacer()
                     OnboardingProgressIndicator(totalSteps: 3, currentStep: 1)
                     Spacer()
                 }
-                Spacer(minLength: 10)
-                VStack(alignment: .center) {
-                    VStack(alignment: .leading, spacing: 20) {
-                        HStack(spacing: 15) {
-                            Image(systemName: "tray.full")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 36, weight: .regular))
-                            Text("Coping Strategies")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundStyle(MindAlertTheme.mindBlack)
-                        }
-                        Spacer()
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 0) {
-                                Text("Hey ")
-                                Text(viewModel.safetyPlan.name)
-                                Text(",")
-                            }
-                            Text("do you already have strategies that help you stay distracted in a crisis?")
-                        }
-                        .foregroundStyle(MindAlertTheme.mindBlack)
-                        .font(.system(size: 32, weight: .semibold))
 
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Button("Yes, I do") { onYes() }
-                                .buttonStyle(GreenButton())
-                            Spacer()
-                        }
-                        HStack {
-                            Spacer()
-                            Button("No, I need help") { onNo() }
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundStyle(MindAlertTheme.mindBlack)
-                                .padding(.vertical, 16)
-                                .padding(.horizontal, 40)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(MindAlertTheme.mindLightGreen.opacity(0.5), lineWidth: 2)
-                                )
-                            Spacer()
-                        }
+                Spacer(minLength: MindAlertTheme.Spacing._12)
+
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
+                    // Section header
+                    HStack(spacing: MindAlertTheme.Spacing._12) {
+                        Image(systemName: "tray.full")
+                            .foregroundStyle(MindAlertTheme.mindGreen)
+                            .font(.system(size: 32))
+                        Text("Coping Strategies")
+                            .font(.maHeadline)
+                            .foregroundStyle(MindAlertTheme.textPrimary)
                     }
-                    .mindAlertCard()
+
+                    Spacer()
+
+                    // Question
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
+                        HStack(spacing: 0) {
+                            Text("Hey ")
+                                .foregroundStyle(MindAlertTheme.textPrimary)
+                            Text(viewModel.safetyPlan.name)
+                                .foregroundStyle(MindAlertTheme.textPrimary)
+                            Text(",")
+                                .foregroundStyle(MindAlertTheme.textPrimary)
+                        }
+                        Text("do you already have strategies that help you stay distracted in a crisis?")
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                    }
+                    .font(.maSplashBody)
+
+                    Spacer()
+
+                    // Buttons
+                    VStack(spacing: MindAlertTheme.Spacing._12) {
+                        Button("Yes, I do") { onYes() }
+                            .buttonStyle(GreenButton())
+                            .frame(maxWidth: .infinity)
+
+                        Button("No, I need help") { onNo() }
+                            .font(.maBoldBody)
+                            .foregroundStyle(MindAlertTheme.textPrimary)
+                            .padding(.vertical, MindAlertTheme.Spacing._16)
+                            .padding(.horizontal, MindAlertTheme.Spacing._32)
+                            .background(
+                                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
+                                    .stroke(MindAlertTheme.borderSeparator, lineWidth: 1.5)
+                            )
+                    }
+                    .frame(maxWidth: .infinity)
                 }
+                .mindAlertCard()
             }
-            .padding(20)
+            .padding(MindAlertTheme.Spacing._24)
         }
         .toolbar(.hidden, for: .navigationBar)
     }

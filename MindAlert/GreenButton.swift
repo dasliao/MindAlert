@@ -1,17 +1,18 @@
 import SwiftUI
 
 struct GreenButton: ButtonStyle {
+    var disabled: Bool = false
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 20, weight: .semibold))
-            .foregroundStyle(.white)
-            .padding(.vertical, 16)
-            .padding(.horizontal, 60)
+            .font(.maBoldBody)
+            .foregroundStyle(disabled ? MindAlertTheme.textTertiary : MindAlertTheme.staticWhite)
+            .padding(.vertical, MindAlertTheme.Spacing._16)
+            .padding(.horizontal, MindAlertTheme.Spacing._64)
             .background(
-                .clear,
-                in: .rect(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
+                    .fill(disabled ? MindAlertTheme.buttonDisable : MindAlertTheme.mindGreen)
             )
-            .glassEffect(.regular.tint(MindAlertTheme.mindGreen).interactive())
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(duration: 0.2), value: configuration.isPressed)
     }

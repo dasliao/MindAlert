@@ -8,106 +8,109 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
                     Text("Your Safety Plan")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.maLargeTitle)
                         .foregroundStyle(MindAlertTheme.mindGreen)
-                        .padding(.top)
+                        .padding(.top, MindAlertTheme.Spacing._8)
 
                     // Name
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
                         Label("Name", systemImage: "person")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .font(.maCaption)
+                            .foregroundStyle(MindAlertTheme.textSecondary)
                         Text(viewModel.safetyPlan.name)
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(.maHeadline)
+                            .foregroundStyle(MindAlertTheme.textPrimary)
                     }
-                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .mindAlertCard()
 
                     // Strategies
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                         Label("Coping Strategies", systemImage: "tray.full")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .font(.maCaption)
+                            .foregroundStyle(MindAlertTheme.textSecondary)
 
                         if viewModel.safetyPlan.strategies.isEmpty {
                             Text("No strategies added")
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(MindAlertTheme.textTertiary)
                                 .italic()
+                                .font(.maCaption)
                         } else {
                             ForEach(viewModel.safetyPlan.strategies.indices, id: \.self) { index in
-                                Text("\(index + 1). \(viewModel.safetyPlan.strategies[index])")
-                                    .font(.system(size: 18))
+                                strategyCard(number: index + 1, text: viewModel.safetyPlan.strategies[index])
                             }
                         }
                     }
-                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .mindAlertCard()
 
                     // Contacts
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
                         Label("Emergency Contacts", systemImage: "person.2.wave.2")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .font(.maCaption)
+                            .foregroundStyle(MindAlertTheme.textSecondary)
 
                         if viewModel.safetyPlan.contacts.isEmpty {
                             Text("No contacts added")
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(MindAlertTheme.textTertiary)
                                 .italic()
+                                .font(.maCaption)
                         } else {
                             ForEach(viewModel.safetyPlan.contacts) { contact in
                                 HStack {
-                                    Text(contact.name)
-                                        .font(.system(size: 18, weight: .semibold))
+                                    Text(String(contact.name.prefix(2)).uppercased())
+                                        .font(.maTabCaption)
+                                        .foregroundStyle(MindAlertTheme.staticWhite)
+                                        .frame(width: 36, height: 36)
+                                        .background(MindAlertTheme.mindGreen)
+                                        .clipShape(Circle())
+                                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._2) {
+                                        Text(contact.name)
+                                            .font(.maBoldBody)
+                                            .foregroundStyle(MindAlertTheme.textPrimary)
+                                        Text(contact.phoneNumber)
+                                            .font(.maCaption)
+                                            .foregroundStyle(MindAlertTheme.textSecondary)
+                                    }
                                     Spacer()
-                                    Text(contact.phoneNumber)
-                                        .font(.system(size: 16))
-                                        .foregroundStyle(.secondary)
                                 }
                             }
                         }
                     }
-                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .mindAlertCard()
 
                     // Emergency Service
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
                         Label("Emergency Service", systemImage: "cross.case")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .font(.maCaption)
+                            .foregroundStyle(MindAlertTheme.textSecondary)
                         Text(viewModel.safetyPlan.emergencyService)
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(.maHeadline)
+                            .foregroundStyle(MindAlertTheme.textPrimary)
                     }
-                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .mindAlertCard()
+
                     // Debug
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
                         Label("Debug", systemImage: "wrench.and.screwdriver")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .font(.maCaption)
+                            .foregroundStyle(MindAlertTheme.textSecondary)
                         Button("Rerun Onboarding") {
                             showRerunConfirmation = true
                         }
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.maBoldBody)
                         .foregroundStyle(MindAlertTheme.mindPeach)
                     }
-                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(MindAlertTheme.cardBackground)
-                    .cornerRadius(15)
+                    .mindAlertCard()
                 }
-                .padding()
+                .padding(MindAlertTheme.Spacing._24)
             }
-            .background(MindAlertTheme.background)
+            .background(MindAlertTheme.background.ignoresSafeArea())
             .alert("Rerun Onboarding?", isPresented: $showRerunConfirmation) {
                 Button("Cancel", role: .cancel) { }
                 Button("Rerun", role: .destructive) {
@@ -117,5 +120,18 @@ struct ProfileView: View {
                 Text("This will clear your current safety plan and restart the onboarding flow.")
             }
         }
+    }
+
+    private func strategyCard(number: Int, text: String) -> some View {
+        HStack(spacing: MindAlertTheme.Spacing._12) {
+            Text("\(number)")
+                .font(.maCaption)
+                .foregroundStyle(MindAlertTheme.mindLightGreen)
+                .frame(width: 24)
+            Text(text)
+                .font(.maBoldBody)
+                .foregroundStyle(MindAlertTheme.textPrimary)
+        }
+        .padding(.vertical, MindAlertTheme.Spacing._4)
     }
 }
