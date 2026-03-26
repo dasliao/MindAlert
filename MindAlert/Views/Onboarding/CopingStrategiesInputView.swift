@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// Onboarding step 9 of 11.
-/// Matches Play page: CopingStrategiesInput (copingStrategies: AnyHashable)
-/// TextElements: text1, text2, strategyNumber
+/// Matches Play page: CopingStrategiesInput
+/// Text: "Let's take some time to thinking about some coping strategies."
 struct CopingStrategiesInputView: View {
     @EnvironmentObject var router: AppRouter
     @EnvironmentObject var viewModel: SafetyPlanViewModel
@@ -23,17 +22,11 @@ struct CopingStrategiesInputView: View {
                     .padding(.top, MindAlertTheme.Spacing._8)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            Text("What helps you cope?")
-                                .font(.maLargeTitle)
-                                .foregroundColor(MindAlertTheme.textPrimary)
-
-                            Text("Write down the things you can do to help yourself feel better. Aim for at least one.")
-                                .font(.maBoldBody)
-                                .foregroundColor(MindAlertTheme.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                        Text("Let's take some time to thinking about some coping strategies.")
+                            .font(.maLargeTitle)
+                            .foregroundColor(MindAlertTheme.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         VStack(spacing: MindAlertTheme.Spacing._8) {
                             ForEach(strategies.indices, id: \.self) { idx in
@@ -53,14 +46,14 @@ struct CopingStrategiesInputView: View {
                                 }
                             }
 
-                            // Add more button
+                            // Add button
                             Button {
                                 strategies.append("")
                                 focusedIndex = strategies.count - 1
                             } label: {
                                 HStack(spacing: MindAlertTheme.Spacing._8) {
                                     Image(systemName: "plus.circle.fill")
-                                    Text("Add another strategy")
+                                    Text("Add")
                                 }
                                 .font(.maBoldBody)
                                 .foregroundColor(MindAlertTheme.mindGreen)
@@ -77,14 +70,13 @@ struct CopingStrategiesInputView: View {
 
                 MAProgressButtons(
                     variant: .single,
-                    primaryTitle: "Continue",
+                    primaryTitle: "Save & Continue",
                     primaryEnabled: canContinue,
                     onPrimary: {
                         let filtered = strategies.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
-                        // Replace all strategies
                         viewModel.safetyPlan.strategies = filtered
                         viewModel.save()
-                        router.navigate(to: .emergencyServices)
+                        router.navigate(to: .peopleThatHelp)
                     }
                 )
             }

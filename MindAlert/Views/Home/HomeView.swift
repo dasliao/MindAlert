@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Main home screen. Matches Play page: Home.
-/// TextElements: greeting, userName, instruction, countdown, countdownInstruction
+/// Matches Play page: Home (Safety Button)
+/// Text: "Hello" + name + hold instruction
 struct HomeView: View {
     @EnvironmentObject var viewModel: SafetyPlanViewModel
 
@@ -10,12 +10,11 @@ struct HomeView: View {
             MindAlertTheme.lightGray.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
-                // Greeting header
+                // Greeting
                 VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
-                    Text("Hello,")
+                    Text("Hello")
                         .font(.maPageHeaderSmall)
                         .foregroundColor(MindAlertTheme.textSecondary)
-
                     Text(viewModel.safetyPlan.name)
                         .font(.maLargeTitle)
                         .foregroundColor(MindAlertTheme.textPrimary)
@@ -23,18 +22,13 @@ struct HomeView: View {
                 .padding(.horizontal, MindAlertTheme.Spacing._24)
                 .padding(.top, MindAlertTheme.Spacing._16)
 
-                // Panic button — takes remaining space
+                // Panic button
                 PanicButton(viewModel: viewModel)
 
-                // Instruction text
-                (Text("Hold for 3 seconds to activate your ")
-                    .foregroundColor(MindAlertTheme.textSecondary) +
-                Text("Safety Plan")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(MindAlertTheme.textPrimary) +
-                Text(".")
-                    .foregroundColor(MindAlertTheme.textSecondary))
+                // Instruction
+                Text("Press and hold the button for 3 seconds to activate your Safety Plan.")
                     .font(.maBoldBody)
+                    .foregroundColor(MindAlertTheme.textSecondary)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, MindAlertTheme.Spacing._24)
@@ -51,4 +45,5 @@ struct HomeView: View {
             vm.setName("Alex")
             return vm
         }())
+        .environmentObject(AppRouter())
 }

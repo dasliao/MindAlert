@@ -1,8 +1,6 @@
 import SwiftUI
 
 /// Profile & settings screen. Matches Play page: ProfileSetting.
-/// Variables: userName, userEmail, copingStrategies, trustContactsArray,
-///            professionalContactsArray, currTrustContact, currProfessionalContact, emergencyServices
 struct ProfileSettingView: View {
     @EnvironmentObject var viewModel: SafetyPlanViewModel
     @EnvironmentObject var router: AppRouter
@@ -25,27 +23,50 @@ struct ProfileSettingView: View {
 
                 ScrollView {
                     VStack(spacing: MindAlertTheme.Spacing._24) {
-                        // Profile section
-                        settingsSection("My Profile") {
-                            editableField(
-                                label: "Name",
-                                value: viewModel.safetyPlan.name,
-                                isEditing: $editingName,
-                                text: $nameText,
-                                onSave: { viewModel.setName(nameText) }
-                            )
-                            Divider().padding(.leading, MindAlertTheme.Spacing._16)
-                            editableField(
-                                label: "Email",
-                                value: viewModel.safetyPlan.email.isEmpty ? "Not set" : viewModel.safetyPlan.email,
-                                isEditing: $editingEmail,
-                                text: $emailText,
-                                onSave: { viewModel.setEmail(emailText) }
-                            )
+                        // Profile header with icon
+                        VStack(spacing: MindAlertTheme.Spacing._12) {
+                            Circle()
+                                .fill(MindAlertTheme.whiteGreen)
+                                .frame(width: 72, height: 72)
+                                .overlay(
+                                    Text(profileInitials)
+                                        .font(.maPageHeaderSmall)
+                                        .foregroundColor(MindAlertTheme.mindGreen)
+                                )
+
+                            VStack(spacing: MindAlertTheme.Spacing._4) {
+                                Text(viewModel.safetyPlan.name)
+                                    .font(.maHeadline)
+                                    .foregroundColor(MindAlertTheme.textPrimary)
+                                Text(viewModel.safetyPlan.email.isEmpty ? "email@example.com" : viewModel.safetyPlan.email)
+                                    .font(.maCaption)
+                                    .foregroundColor(MindAlertTheme.textSecondary)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, MindAlertTheme.Spacing._16)
+
+                        // APP SETTING
+                        settingsSection("APP SETTING") {
+                            HStack {
+                                Text("Appearance")
+                                    .font(.maBoldBody)
+                                    .foregroundColor(MindAlertTheme.textPrimary)
+                                Spacer()
+                                // Segmented control placeholder: Auto / Light / Dark
+                                Picker("", selection: .constant(0)) {
+                                    Text("Auto").tag(0)
+                                    Text("Light").tag(1)
+                                    Text("Dark").tag(2)
+                                }
+                                .pickerStyle(.segmented)
+                                .frame(width: 180)
+                            }
+                            .padding(MindAlertTheme.Spacing._16)
                         }
 
-                        // Coping strategies section
-                        settingsSection("Coping Strategies") {
+                        // COPING STRATEGIES
+                        settingsSection("COPING STRATEGIES") {
                             if viewModel.safetyPlan.strategies.isEmpty {
                                 emptyRow("No strategies added yet")
                             } else {
@@ -60,8 +81,8 @@ struct ProfileSettingView: View {
                             }
                         }
 
-                        // Trust contacts section
-                        settingsSection("People That Help") {
+                        // TRUST CONTACTS
+                        settingsSection("TRUST CONTACTS") {
                             if viewModel.safetyPlan.contacts.isEmpty {
                                 emptyRow("No contacts added yet")
                             } else {
@@ -81,20 +102,11 @@ struct ProfileSettingView: View {
                                 }
                             }
                             Divider().padding(.leading, MindAlertTheme.Spacing._16)
-                            Button {
-                                showAddTrustContact = true
-                            } label: {
-                                Label("Add Contact", systemImage: "person.badge.plus")
-                                    .font(.maBoldBody)
-                                    .foregroundColor(MindAlertTheme.mindGreen)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(MindAlertTheme.Spacing._16)
-                            }
-                            .buttonStyle(.plain)
+                            importButton { showAddTrustContact = true }
                         }
 
-                        // Professional contacts section
-                        settingsSection("Professional Support") {
+                        // PROFESSIONALS CONTACTS
+                        settingsSection("PROFESSIONALS CONTACTS") {
                             if viewModel.safetyPlan.professionalContacts.isEmpty {
                                 emptyRow("No professional contacts yet")
                             } else {
@@ -114,25 +126,16 @@ struct ProfileSettingView: View {
                                 }
                             }
                             Divider().padding(.leading, MindAlertTheme.Spacing._16)
-                            Button {
-                                showAddProfessionalContact = true
-                            } label: {
-                                Label("Add Professional", systemImage: "person.badge.plus")
-                                    .font(.maBoldBody)
-                                    .foregroundColor(MindAlertTheme.mindGreen)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(MindAlertTheme.Spacing._16)
-                            }
-                            .buttonStyle(.plain)
+                            importButton { showAddProfessionalContact = true }
                         }
 
-                        // Emergency service section
-                        settingsSection("Emergency Service") {
+                        // EMERGENCY SERVICES
+                        settingsSection("EMERGENCY SERVICES") {
                             HStack(spacing: MindAlertTheme.Spacing._12) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundColor(MindAlertTheme.mindGreen)
                                     .frame(width: 24)
-                                Text(viewModel.safetyPlan.emergencyService)
+                                Text(viewModel.safetyPlan.emergencyService.isEmpty ? "911" : viewModel.safetyPlan.emergencyService)
                                     .font(.maBoldBody)
                                     .foregroundColor(MindAlertTheme.textPrimary)
                                 Spacer()
@@ -140,7 +143,7 @@ struct ProfileSettingView: View {
                             .padding(MindAlertTheme.Spacing._16)
                         }
 
-                        // Debug: Rerun onboarding
+                        // Developer / Rerun onboarding
                         settingsSection("Developer") {
                             Button {
                                 showResetConfirmation = true
@@ -195,6 +198,14 @@ struct ProfileSettingView: View {
         }
     }
 
+    private var profileInitials: String {
+        let parts = viewModel.safetyPlan.name.split(separator: " ")
+        if parts.count >= 2 {
+            return String(parts[0].prefix(1)) + String(parts[1].prefix(1))
+        }
+        return String(viewModel.safetyPlan.name.prefix(2)).uppercased()
+    }
+
     @ViewBuilder
     private func settingsSection<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
@@ -212,39 +223,18 @@ struct ProfileSettingView: View {
     }
 
     @ViewBuilder
-    private func editableField(label: String, value: String, isEditing: Binding<Bool>, text: Binding<String>, onSave: @escaping () -> Void) -> some View {
-        HStack(spacing: MindAlertTheme.Spacing._12) {
-            Text(label)
-                .font(.maBoldBody)
-                .foregroundColor(MindAlertTheme.textSecondary)
-                .frame(width: 60, alignment: .leading)
-
-            if isEditing.wrappedValue {
-                TextField(label, text: text)
-                    .font(.maBoldBody)
-                    .foregroundColor(MindAlertTheme.textPrimary)
-            } else {
-                Text(value)
-                    .font(.maBoldBody)
-                    .foregroundColor(MindAlertTheme.textPrimary)
+    private func importButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: MindAlertTheme.Spacing._8) {
+                Image(systemName: "person.crop.circle.fill.badge.plus")
+                Text("Import from Contacts")
             }
-
-            Spacer()
-
-            Button {
-                if isEditing.wrappedValue {
-                    onSave()
-                    isEditing.wrappedValue = false
-                } else {
-                    isEditing.wrappedValue = true
-                }
-            } label: {
-                Text(isEditing.wrappedValue ? "Save" : "Edit")
-                    .font(.maCaption)
-                    .foregroundColor(MindAlertTheme.mindGreen)
-            }
+            .font(.maBoldBody)
+            .foregroundColor(MindAlertTheme.mindGreen)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(MindAlertTheme.Spacing._16)
         }
-        .padding(MindAlertTheme.Spacing._16)
+        .buttonStyle(.plain)
     }
 
     @ViewBuilder

@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// Onboarding step 6 of 11.
 /// Matches Play page: PeopleThatHelp
-/// Variables: contactString, contactArray, accessTest
+/// Text from Play: default help message + "Import from Contacts"
 struct PeopleThatHelpView: View {
     @EnvironmentObject var router: AppRouter
     @EnvironmentObject var viewModel: SafetyPlanViewModel
@@ -14,22 +13,15 @@ struct PeopleThatHelpView: View {
             MindAlertTheme.lightGray.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                MANavigation(title: "People That Help", onBack: { router.navigate(to: .aboutSafetyPlan) })
+                MANavigation(title: "People That Help", onBack: { router.navigate(to: .copingStrategiesInput) })
                     .padding(.top, MindAlertTheme.Spacing._8)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
-                        // Header
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            Text("Who do you trust?")
-                                .font(.maLargeTitle)
-                                .foregroundColor(MindAlertTheme.textPrimary)
-
-                            Text("Add people you trust who can support you during a crisis. They'll receive a message when you activate your safety plan.")
-                                .font(.maBoldBody)
-                                .foregroundColor(MindAlertTheme.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                        Text("In hard moments, just being around someone or being in a familiar place can make a big difference. You don't have to go through things alone.")
+                            .font(.maBoldBody)
+                            .foregroundColor(MindAlertTheme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         // Contact list
                         if !viewModel.safetyPlan.contacts.isEmpty {
@@ -48,26 +40,38 @@ struct PeopleThatHelpView: View {
                             }
                         }
 
-                        // Add contact button
-                        Button {
-                            showContactPicker = true
-                        } label: {
-                            HStack(spacing: MindAlertTheme.Spacing._8) {
-                                Image(systemName: "person.badge.plus")
-                                Text("Add from Contacts")
+                        // Add buttons
+                        VStack(spacing: MindAlertTheme.Spacing._8) {
+                            Button {
+                                showContactPicker = true
+                            } label: {
+                                HStack(spacing: MindAlertTheme.Spacing._8) {
+                                    Image(systemName: "person.crop.circle.fill.badge.plus")
+                                    Text("Import from Contacts")
+                                }
+                                .font(.maBoldBody)
+                                .foregroundColor(MindAlertTheme.mindGreen)
+                                .frame(maxWidth: .infinity)
+                                .padding(MindAlertTheme.Spacing._16)
+                                .background(MindAlertTheme.whiteGreen)
+                                .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
                             }
-                            .font(.maBoldBody)
-                            .foregroundColor(MindAlertTheme.mindGreen)
-                            .frame(maxWidth: .infinity)
-                            .padding(MindAlertTheme.Spacing._16)
-                            .background(MindAlertTheme.whiteGreen)
-                            .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16)
-                                    .strokeBorder(MindAlertTheme.mindGreen.opacity(0.4), lineWidth: 1.5)
-                            )
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+
+                        // Default help message
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
+                            Text("Default Help Message to Send")
+                                .font(.maHeadline)
+                                .foregroundColor(MindAlertTheme.textPrimary)
+                            Text("Hi, I'm really struggling right now and need some support. I added you as a trusted contact in my safety plan app. Can you please check in with me?")
+                                .font(.maCaption)
+                                .foregroundColor(MindAlertTheme.textSecondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(MindAlertTheme.Spacing._16)
+                        .background(MindAlertTheme.white)
+                        .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
                     }
                     .padding(.horizontal, MindAlertTheme.Spacing._24)
                     .padding(.top, MindAlertTheme.Spacing._16)
@@ -76,8 +80,7 @@ struct PeopleThatHelpView: View {
 
                 MAProgressButtons(
                     variant: .single,
-                    primaryTitle: "Continue",
-                    primaryEnabled: !viewModel.safetyPlan.contacts.isEmpty,
+                    primaryTitle: "Save & Continue",
                     onPrimary: { router.navigate(to: .professionalSupport) }
                 )
             }

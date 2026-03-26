@@ -1,14 +1,11 @@
 import SwiftUI
 
-/// Onboarding step 7 of 11 AND the Resources tab in the main app.
 /// Matches Play page: ProfessionalSupport
-/// Same layout as PeopleThatHelp but for professional contacts (therapist, counselor, etc.)
+/// Same layout as PeopleThatHelp but for professional contacts
 struct ProfessionalSupportView: View {
     @EnvironmentObject var router: AppRouter
     @EnvironmentObject var viewModel: SafetyPlanViewModel
 
-    /// When true, shows back/continue buttons (onboarding mode).
-    /// When false, shows as standalone tab (no navigation buttons).
     var isOnboarding: Bool = true
 
     @State private var showContactPicker = false
@@ -27,18 +24,11 @@ struct ProfessionalSupportView: View {
                 }
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
-                        // Header
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            Text("Professional Support")
-                                .font(.maLargeTitle)
-                                .foregroundColor(MindAlertTheme.textPrimary)
-
-                            Text("Add therapists, counselors, or other mental health professionals. They'll be shown in your safety plan for reference.")
-                                .font(.maBoldBody)
-                                .foregroundColor(MindAlertTheme.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                        Text("People like therapists, doctors, or counselors are trained to help you through difficult moments. Add the professionals you trust so you can reach them when you need support.")
+                            .font(.maBoldBody)
+                            .foregroundColor(MindAlertTheme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         // Contact list
                         if !viewModel.safetyPlan.professionalContacts.isEmpty {
@@ -57,13 +47,13 @@ struct ProfessionalSupportView: View {
                             }
                         }
 
-                        // Add contact button
+                        // Import button
                         Button {
                             showContactPicker = true
                         } label: {
                             HStack(spacing: MindAlertTheme.Spacing._8) {
-                                Image(systemName: "person.badge.plus")
-                                Text("Add Professional Contact")
+                                Image(systemName: "person.crop.circle.fill.badge.plus")
+                                Text("Import from Contacts")
                             }
                             .font(.maBoldBody)
                             .foregroundColor(MindAlertTheme.mindGreen)
@@ -71,12 +61,22 @@ struct ProfessionalSupportView: View {
                             .padding(MindAlertTheme.Spacing._16)
                             .background(MindAlertTheme.whiteGreen)
                             .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16)
-                                    .strokeBorder(MindAlertTheme.mindGreen.opacity(0.4), lineWidth: 1.5)
-                            )
                         }
                         .buttonStyle(.plain)
+
+                        // Default help message
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
+                            Text("Default Help Message to Send")
+                                .font(.maHeadline)
+                                .foregroundColor(MindAlertTheme.textPrimary)
+                            Text("Hi, I'm really struggling right now and need some support. I added you as a trusted contact in my safety plan app. Can you please check in with me?")
+                                .font(.maCaption)
+                                .foregroundColor(MindAlertTheme.textSecondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(MindAlertTheme.Spacing._16)
+                        .background(MindAlertTheme.white)
+                        .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
 
                         if !isOnboarding {
                             // Crisis resources in tab mode
@@ -84,10 +84,8 @@ struct ProfessionalSupportView: View {
                                 Text("Crisis Resources")
                                     .font(.maHeadline)
                                     .foregroundColor(MindAlertTheme.textPrimary)
-
                                 crisisCard(title: "988 Suicide & Crisis Lifeline", detail: "Call or text 988", icon: "phone.fill")
                                 crisisCard(title: "Crisis Text Line", detail: "Text HOME to 741741", icon: "message.fill")
-                                crisisCard(title: "SAMHSA Helpline", detail: "1-800-662-4357", icon: "heart.fill")
                             }
                         }
                     }
@@ -99,9 +97,8 @@ struct ProfessionalSupportView: View {
                 if isOnboarding {
                     MAProgressButtons(
                         variant: .single,
-                        primaryTitle: "Continue",
-                        primaryEnabled: !viewModel.safetyPlan.professionalContacts.isEmpty,
-                        onPrimary: { router.navigate(to: .copingStrategiesIntro) }
+                        primaryTitle: "Save & Continue",
+                        onPrimary: { router.navigate(to: .emergencyServices) }
                     )
                 }
             }
@@ -123,14 +120,9 @@ struct ProfessionalSupportView: View {
                 .font(.system(size: 16))
                 .foregroundColor(MindAlertTheme.mindGreen)
                 .frame(width: 32)
-
             VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._2) {
-                Text(title)
-                    .font(.maBoldBody)
-                    .foregroundColor(MindAlertTheme.textPrimary)
-                Text(detail)
-                    .font(.maCaption)
-                    .foregroundColor(MindAlertTheme.textSecondary)
+                Text(title).font(.maBoldBody).foregroundColor(MindAlertTheme.textPrimary)
+                Text(detail).font(.maCaption).foregroundColor(MindAlertTheme.textSecondary)
             }
             Spacer()
         }

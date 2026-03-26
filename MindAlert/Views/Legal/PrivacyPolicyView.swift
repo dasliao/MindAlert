@@ -1,51 +1,57 @@
 import SwiftUI
 
-/// Static privacy policy. Matches Play page: PrivacyPolicy (13 text elements).
+/// Matches Play page: PrivacyPolicy
 struct PrivacyPolicyView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
-                    legalSection("Overview",
-                        "MindAlert is committed to protecting your privacy. This Privacy Policy explains how your information is handled when you use our app.")
+                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                    // Header
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
+                        Text("Privacy Policy")
+                            .font(.maLargeTitle)
+                            .foregroundColor(MindAlertTheme.textPrimary)
+                        Text("Last Updated: April 06, 2025")
+                            .font(.maCaption)
+                            .foregroundColor(MindAlertTheme.textSecondary)
+                    }
 
-                    legalSection("Data Storage",
-                        "All data you enter in MindAlert — including your name, contacts, coping strategies, and emergency service preferences — is stored exclusively on your device using Apple's secure local storage (UserDefaults). We do not operate any servers or databases.")
+                    // Intro
+                    Text("Your privacy is important. MindAlert was designed with respect for your privacy and emotional safety. The app does not collect any personal data or track your activity.")
+                        .font(.maBoldBody)
+                        .foregroundColor(MindAlertTheme.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
 
-                    legalSection("Data We Do Not Collect",
-                        "MindAlert does not collect, transmit, or share any personal information. There is no account creation, no sign-in, and no network communication with any external servers.")
+                    // Section 1
+                    legalSection("1. What Data Is Collected",
+                        "None. MindAlert does not collect, transmit, or store any personal information or usage data. No login, account, or internet connection is required to use the app.")
 
-                    legalSection("Contact Information",
-                        "When you add contacts from your address book, only the name and phone number you select are saved to your safety plan. We use the system contact picker (CNContactPickerViewController) which does not grant MindAlert access to your entire contacts list.")
+                    // Section 2
+                    legalSection("2. Where Your Data Lives",
+                        "All information you enter in MindAlert, including your safety plan and contacts, is stored locally on your iPhone. It is never uploaded or shared.")
 
-                    legalSection("SMS Messages",
-                        "When your safety plan is activated, MindAlert can compose SMS messages to your emergency contacts. These messages are sent through your device's native messaging app — MindAlert does not intercept or store the content of these messages.")
+                    // Section 3
+                    legalSection("3. No Analytics or Advertising",
+                        "MindAlert does not use analytics tools, advertising, or third-party tracking services.")
 
-                    legalSection("No Third Parties",
-                        "MindAlert does not integrate with any third-party analytics, advertising, or data collection services.")
+                    // Section 4
+                    legalSection("4. Your Control",
+                        "You can edit or delete your data at any time. Deleting the app from your phone will remove all stored data.")
 
-                    legalSection("Children's Privacy",
-                        "MindAlert is not directed at children under 13. We do not knowingly collect information from children.")
-
-                    legalSection("Your Control",
-                        "You can delete all your data at any time by using the 'Rerun Onboarding' option in the Profile tab, or by deleting the app from your device.")
-
-                    legalSection("Changes to This Policy",
-                        "Any updates to this privacy policy will be reflected in an updated version of the app. Continued use of the app after changes indicates acceptance of the revised policy.")
-
-                    legalSection("Contact",
-                        "If you have questions about this privacy policy, please contact us through the App Store listing.")
+                    // Section 5
+                    legalSection("5. Feedback and Support",
+                        "MindAlert is not maintained by a company or organization, and it does not offer professional mental health support. If you are in distress, please reach out to a trusted person or a mental health professional.\n\nIf you have feedback or suggestions to improve the app, you're welcome to share them. The creator deeply values your input and is committed to making MindAlert more helpful for those who need it.")
                 }
                 .padding(MindAlertTheme.Spacing._24)
             }
             .background(MindAlertTheme.lightGray.ignoresSafeArea())
-            .navigationTitle("Privacy Policy")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") { dismiss() }
+                    Button("Back to Onboarding") { dismiss() }
+                        .font(.maBoldBody)
                         .foregroundColor(MindAlertTheme.mindGreen)
                 }
             }

@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// Onboarding step 8 of 11.
 /// Matches Play page: CopingStrategiesIntro
-/// TextElements: text1, emoji (x7), text2, userName, text2_1 through text2_8, emoji_1 through emoji_7
+/// Exact emoji + text pairs from Play export
 struct CopingStrategiesIntroView: View {
     @EnvironmentObject var router: AppRouter
     @EnvironmentObject var viewModel: SafetyPlanViewModel
@@ -12,45 +11,48 @@ struct CopingStrategiesIntroView: View {
             MindAlertTheme.lightGray.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                MANavigation(title: "", variant: .backOnly, onBack: { router.navigate(to: .professionalSupport) })
+                MANavigation(title: "", variant: .backOnly, onBack: { router.navigate(to: .infoDisclaimer) })
                     .padding(.top, MindAlertTheme.Spacing._8)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
-                        // Personalized greeting
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            Text("Great job, \(viewModel.safetyPlan.name)! 🎉")
-                                .font(.maLargeTitle)
-                                .foregroundColor(MindAlertTheme.textPrimary)
-
-                            Text("Now let's think about your coping strategies — the things that help you feel better.")
-                                .font(.maBoldBody)
-                                .foregroundColor(MindAlertTheme.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                        // Greeting
+                        HStack(spacing: MindAlertTheme.Spacing._8) {
+                            Text("👋")
+                                .font(.system(size: 28))
+                            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._2) {
+                                Text("Hello")
+                                    .font(.maPageHeaderSmall)
+                                    .foregroundColor(MindAlertTheme.textSecondary)
+                                Text(viewModel.safetyPlan.name)
+                                    .font(.maLargeTitle)
+                                    .foregroundColor(MindAlertTheme.textPrimary)
+                            }
                         }
 
-                        // Coping strategy examples
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            Text("Here are some ideas:")
-                                .font(.maHeadline)
-                                .foregroundColor(MindAlertTheme.textPrimary)
-
-                            strategyExample(emoji: "🎵", text: "Listen to calming music")
-                            strategyExample(emoji: "🚶", text: "Take a walk outside")
-                            strategyExample(emoji: "🌬", text: "Practice deep breathing")
-                            strategyExample(emoji: "📖", text: "Read a favorite book")
-                            strategyExample(emoji: "☕️", text: "Make a warm drink")
-                            strategyExample(emoji: "🎨", text: "Draw or color")
-                            strategyExample(emoji: "🐾", text: "Spend time with a pet")
-                        }
-                        .padding(MindAlertTheme.Spacing._16)
-                        .background(MindAlertTheme.white)
-                        .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
-
-                        Text("You'll add your own strategies on the next screen. Choose things that actually help you — they can be simple.")
-                            .font(.maCaption)
+                        Text("What are a few things that help you feel a little better, even for a moment?")
+                            .font(.maBoldBody)
                             .foregroundColor(MindAlertTheme.textSecondary)
                             .fixedSize(horizontal: false, vertical: true)
+
+                        // Strategy examples from Play
+                        VStack(spacing: 0) {
+                            strategyRow(emoji: "📺", text: "Watch a video that makes you smile or feel calm")
+                            divider()
+                            strategyRow(emoji: "🎧", text: "Listen to a music that soothes or comforts you")
+                            divider()
+                            strategyRow(emoji: "🕹️", text: "Play a game that helps you focus or relax")
+                            divider()
+                            strategyRow(emoji: "📚", text: "Read a book that feels familiar or safe")
+                            divider()
+                            strategyRow(emoji: "🐶", text: "Spend time with your pet or just sit near them")
+                            divider()
+                            strategyRow(emoji: "🍕", text: "Eat some delicious food from your favorite restaurant")
+                            divider()
+                            strategyRow(emoji: "📋", text: "You can add your own ideas too. Whatever helps you feel even a little bit more grounded is worth remembering.")
+                        }
+                        .background(MindAlertTheme.white)
+                        .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
                     }
                     .padding(.horizontal, MindAlertTheme.Spacing._24)
                     .padding(.top, MindAlertTheme.Spacing._16)
@@ -59,7 +61,7 @@ struct CopingStrategiesIntroView: View {
 
                 MAProgressButtons(
                     variant: .single,
-                    primaryTitle: "Add My Strategies",
+                    primaryTitle: "I'm ready",
                     onPrimary: { router.navigate(to: .copingStrategiesInput) }
                 )
             }
@@ -67,16 +69,23 @@ struct CopingStrategiesIntroView: View {
     }
 
     @ViewBuilder
-    private func strategyExample(emoji: String, text: String) -> some View {
-        HStack(spacing: MindAlertTheme.Spacing._12) {
+    private func strategyRow(emoji: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: MindAlertTheme.Spacing._12) {
             Text(emoji)
-                .font(.system(size: 20))
+                .font(.system(size: 22))
                 .frame(width: 32)
             Text(text)
                 .font(.maBoldBody)
-                .foregroundColor(MindAlertTheme.textSecondary)
-            Spacer()
+                .foregroundColor(MindAlertTheme.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .padding(.horizontal, MindAlertTheme.Spacing._16)
+        .padding(.vertical, MindAlertTheme.Spacing._12)
+    }
+
+    @ViewBuilder
+    private func divider() -> some View {
+        Divider().padding(.horizontal, MindAlertTheme.Spacing._16)
     }
 }
 
