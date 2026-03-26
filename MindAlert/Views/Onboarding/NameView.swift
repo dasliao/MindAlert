@@ -1,67 +1,111 @@
 import SwiftUI
 
+/// Matches Play page: Name (Basic Info)
+/// Text: "Let's get to know you better." + email field
 struct NameView: View {
-    @ObservedObject var viewModel: SafetyPlanViewModel
-    var onNext: () -> Void
+    @EnvironmentObject var router: AppRouter
+    @EnvironmentObject var viewModel: SafetyPlanViewModel
+
+    @State private var nameText = ""
+    @State private var emailText = ""
+
+    private var canContinue: Bool {
+        !nameText.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 
     var body: some View {
         ZStack {
-            MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
-                // Header
-                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
-                    Text("Welcome to")
-                        .font(.maLargeTitle)
-                        .foregroundStyle(MindAlertTheme.textPrimary)
-                    HStack(spacing: 0) {
-                        Text("Mind")
+            MindAlertTheme.lightGray.ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                MANavigation(title: "", variant: .backOnly, onBack: { router.navigate(to: .initial) })
+                    .padding(.top, MindAlertTheme.Spacing._8)
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._24) {
+                        // Header
+                        Text("Let's get to know you better.")
                             .font(.maLargeTitle)
-                            .foregroundStyle(MindAlertTheme.mindGreen)
-                        Text("Alert")
-                            .font(.maLargeTitle)
-                            .foregroundStyle(MindAlertTheme.mindPeach)
-                        Text("!")
-                            .font(.maLargeTitle)
-                            .foregroundStyle(MindAlertTheme.textPrimary)
+                            .foregroundColor(MindAlertTheme.textPrimary)
+
+                        // Intro message
+                        Text("Your information is used only to help you log in and access your safety plan. We don't share it with anyone.")
+                            .font(.maBoldBody)
+                            .foregroundColor(MindAlertTheme.textSecondary)
+                            .padding(MindAlertTheme.Spacing._16)
+                            .background(MindAlertTheme.white)
+                            .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
+
+                        // Name field
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
+                            HStack(spacing: MindAlertTheme.Spacing._8) {
+                                Image(systemName: "person")
+                                    .foregroundColor(MindAlertTheme.mindGreen)
+                                Text("What should we call you?")
+                                    .font(.maHeadline)
+                                    .foregroundColor(MindAlertTheme.textPrimary)
+                            }
+                            TextField("Enter Your Name", text: $nameText)
+                                .font(.maBoldBody)
+                                .foregroundColor(MindAlertTheme.textPrimary)
+                                .padding(MindAlertTheme.Spacing._16)
+                                .background(MindAlertTheme.white)
+                                .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
+                        }
+
+                        // Email field
+                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
+                            HStack(spacing: MindAlertTheme.Spacing._8) {
+                                Image(systemName: "envelope")
+                                    .foregroundColor(MindAlertTheme.mindGreen)
+                                Text("What is your email?")
+                                    .font(.maHeadline)
+                                    .foregroundColor(MindAlertTheme.textPrimary)
+                            }
+                            TextField("Enter Your Email", text: $emailText)
+                                .font(.maBoldBody)
+                                .foregroundColor(MindAlertTheme.textPrimary)
+                                .keyboardType(.emailAddress)
+                                .textContentType(.emailAddress)
+                                .autocapitalization(.none)
+                                .padding(MindAlertTheme.Spacing._16)
+                                .background(MindAlertTheme.white)
+                                .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
+                        }
                     }
+                    .padding(.horizontal, MindAlertTheme.Spacing._24)
+                    .padding(.top, MindAlertTheme.Spacing._24)
+                    .padding(.bottom, MindAlertTheme.Spacing._32)
                 }
-                .padding(.horizontal, MindAlertTheme.Spacing._24)
 
-                Spacer()
-
-                // Name input section
-                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
-                    Image(systemName: "person")
-                        .font(.system(size: 36))
-                        .foregroundStyle(MindAlertTheme.mindGreen)
-
-                    Text("What should\nwe call you?")
-                        .font(.maSplashBody)
-                        .foregroundStyle(MindAlertTheme.textPrimary)
-
-                    TextField("Your name", text: Binding(
-                        get: { viewModel.safetyPlan.name },
-                        set: { viewModel.setName($0) }
-                    ))
-                    .font(.maSplashBody)
-                    .foregroundStyle(MindAlertTheme.mindPeach)
-                    .underlineTextField()
+                // Progress buttons
+                VStack(spacing: MindAlertTheme.Spacing._8) {
+                    MAProgressButtons(
+                        variant: .single,
+                        primaryTitle: "Continue",
+                        primaryEnabled: canContinue,
+                        onPrimary: {
+                            viewModel.setName(nameText.trimmingCharacters(in: .whitespaces))
+                            viewModel.setEmail(emailText.trimmingCharacters(in: .whitespaces))
+                            router.navigate(to: .infoDisclaimer)
+                        }
+                    )
+                    Text("Already have an account? Sign in")
+                        .font(.maCaption)
+                        .foregroundColor(MindAlertTheme.textSecondary)
+                        .padding(.bottom, MindAlertTheme.Spacing._8)
                 }
-                .padding(.horizontal, MindAlertTheme.Spacing._24)
-
-                Spacer()
-
-                // Bottom buttons
-                VStack(spacing: MindAlertTheme.Spacing._12) {
-                    Button("Next") { onNext() }
-                        .buttonStyle(GreenButton(disabled: viewModel.safetyPlan.name.trimmingCharacters(in: .whitespaces).isEmpty))
-                        .disabled(viewModel.safetyPlan.name.trimmingCharacters(in: .whitespaces).isEmpty)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.bottom, MindAlertTheme.Spacing._16)
             }
-            .padding(.vertical, MindAlertTheme.Spacing._24)
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            nameText = viewModel.safetyPlan.name
+            emailText = viewModel.safetyPlan.email
+        }
     }
+}
+
+#Preview {
+    NameView()
+        .environmentObject(AppRouter())
+        .environmentObject(SafetyPlanViewModel())
 }

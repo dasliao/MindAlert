@@ -1,137 +1,78 @@
 import SwiftUI
 
+/// Matches Play page: EmergencyServices
+/// Text: description + service items with toggle switches (911, 988)
 struct EmergencyServicesView: View {
-    @ObservedObject var viewModel: SafetyPlanViewModel
-    @State private var useAlternative = false
-    @State private var alternativeService = ""
-    var onNext: () -> Void
+    @EnvironmentObject var router: AppRouter
+    @EnvironmentObject var viewModel: SafetyPlanViewModel
+
+    @State private var enable911 = true
+    @State private var enable988 = false
 
     var body: some View {
         ZStack {
-            MindAlertTheme.background.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._12) {
-                HStack {
-                    Spacer()
-                    OnboardingProgressIndicator(totalSteps: 3, currentStep: 3)
-                    Spacer()
-                }
+            MindAlertTheme.lightGray.ignoresSafeArea()
 
-                // Section header
-                HStack(spacing: MindAlertTheme.Spacing._12) {
-                    Image(systemName: "cross.case")
-                        .foregroundStyle(MindAlertTheme.mindGreen)
-                        .font(.system(size: 32))
-                    Text("Emergency Services")
-                        .font(.maHeadline)
-                        .foregroundStyle(MindAlertTheme.textPrimary)
-                }
+            VStack(spacing: 0) {
+                MANavigation(title: "Emergency Services", onBack: { router.navigate(to: .professionalSupport) })
+                    .padding(.top, MindAlertTheme.Spacing._8)
 
-                Divider()
-                    .background(MindAlertTheme.borderSeparator)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._16) {
+                        Text("In a crisis, every second matters. Selecting emergency services here gives you quick access to help when you're in immediate danger or feeling unsafe.")
+                            .font(.maBoldBody)
+                            .foregroundColor(MindAlertTheme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
 
-                VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._4) {
-                    HStack(spacing: 0) {
-                        Text("Almost there ")
-                        Text(viewModel.safetyPlan.name)
-                        Text(",")
-                    }
-                    Text("let's choose your emergency services")
-                }
-                .foregroundStyle(MindAlertTheme.textPrimary)
-                .font(.maSplashBody)
-
-                // Options card
-                VStack(spacing: 0) {
-                    // 911 option
-                    Button {
-                        useAlternative = false
-                        viewModel.setEmergencyService("911")
-                    } label: {
-                        HStack(spacing: MindAlertTheme.Spacing._12) {
-                            Image(systemName: !useAlternative ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 24))
-                            Text("911")
-                                .font(.maSafetyPlanBody)
-                                .foregroundStyle(MindAlertTheme.textPrimary)
-                            Spacer()
+                        // Service toggles
+                        VStack(spacing: 0) {
+                            serviceToggleRow(title: "911", isOn: $enable911)
+                            Divider().padding(.horizontal, MindAlertTheme.Spacing._16)
+                            serviceToggleRow(title: "988", isOn: $enable988)
                         }
-                        .padding(MindAlertTheme.Spacing._16)
+                        .background(MindAlertTheme.white)
+                        .clipShape(RoundedRectangle(cornerRadius: MindAlertTheme.Radius._16))
                     }
-
-                    Divider()
-                        .background(MindAlertTheme.borderSeparator)
-                        .padding(.horizontal, MindAlertTheme.Spacing._16)
-
-                    // 988 option
-                    Button {
-                        useAlternative = false
-                        viewModel.setEmergencyService("988")
-                    } label: {
-                        HStack(spacing: MindAlertTheme.Spacing._12) {
-                            Image(systemName: !useAlternative && viewModel.safetyPlan.emergencyService == "988" ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(MindAlertTheme.mindGreen)
-                                .font(.system(size: 24))
-                            Text("988 (Suicide & Crisis Lifeline)")
-                                .font(.maSafetyPlanBody)
-                                .foregroundStyle(MindAlertTheme.textPrimary)
-                            Spacer()
-                        }
-                        .padding(MindAlertTheme.Spacing._16)
-                    }
-
-                    Divider()
-                        .background(MindAlertTheme.borderSeparator)
-                        .padding(.horizontal, MindAlertTheme.Spacing._16)
-
-                    // Alternative option
-                    Button {
-                        useAlternative = true
-                    } label: {
-                        VStack(alignment: .leading, spacing: MindAlertTheme.Spacing._8) {
-                            HStack(spacing: MindAlertTheme.Spacing._12) {
-                                Image(systemName: useAlternative ? "checkmark.circle.fill" : "circle")
-                                    .foregroundStyle(MindAlertTheme.mindGreen)
-                                    .font(.system(size: 24))
-                                Text("I have an alternative emergency service")
-                                    .font(.maSafetyPlanBody)
-                                    .foregroundStyle(MindAlertTheme.textPrimary)
-                                    .multilineTextAlignment(.leading)
-                            }
-
-                            if useAlternative {
-                                TextField("Enter service number", text: $alternativeService)
-                                    .font(.maHeadline)
-                                    .keyboardType(.phonePad)
-                                    .padding(.leading, 36)
-                                    .foregroundStyle(MindAlertTheme.textPrimary)
-                                    .onChange(of: alternativeService) { _, newValue in
-                                        if !newValue.isEmpty {
-                                            viewModel.setEmergencyService(newValue)
-                                        }
-                                    }
-                            }
-                        }
-                        .padding(MindAlertTheme.Spacing._16)
-                    }
+                    .padding(.horizontal, MindAlertTheme.Spacing._24)
+                    .padding(.top, MindAlertTheme.Spacing._16)
+                    .padding(.bottom, MindAlertTheme.Spacing._32)
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: MindAlertTheme.Radius._24)
-                        .fill(MindAlertTheme.cardBackground)
+
+                MAProgressButtons(
+                    variant: .single,
+                    primaryTitle: "Save & Continue",
+                    primaryEnabled: enable911 || enable988,
+                    onPrimary: {
+                        let service = enable911 ? "911" : "988"
+                        viewModel.setEmergencyService(service)
+                        router.navigate(to: .setupConfirmation)
+                    }
                 )
-
-                Spacer()
-
-                HStack {
-                    Spacer()
-                    Button("Confirm") { onNext() }
-                        .buttonStyle(GreenButton())
-                    Spacer()
-                }
-                .padding(.bottom, MindAlertTheme.Spacing._8)
             }
-            .padding(MindAlertTheme.Spacing._24)
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            enable911 = viewModel.safetyPlan.emergencyService == "911"
+            enable988 = viewModel.safetyPlan.emergencyService == "988"
+        }
     }
+
+    @ViewBuilder
+    private func serviceToggleRow(title: String, isOn: Binding<Bool>) -> some View {
+        HStack {
+            Text(title)
+                .font(.maSafetyPlanBody)
+                .foregroundColor(MindAlertTheme.textPrimary)
+            Spacer()
+            Toggle("", isOn: isOn)
+                .tint(MindAlertTheme.mindGreen)
+                .labelsHidden()
+        }
+        .padding(MindAlertTheme.Spacing._16)
+    }
+}
+
+#Preview {
+    EmergencyServicesView()
+        .environmentObject(AppRouter())
+        .environmentObject(SafetyPlanViewModel())
 }
