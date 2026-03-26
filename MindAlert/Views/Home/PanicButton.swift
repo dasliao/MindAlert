@@ -2,6 +2,8 @@ import SwiftUI
 
 struct PanicButton: View {
     @ObservedObject var viewModel: SafetyPlanViewModel
+    @EnvironmentObject var router: AppRouter
+
     @State private var isPressed = false
     @State private var showingActivatedPlan = false
     @State private var countdown: Int? = nil
@@ -23,11 +25,12 @@ struct PanicButton: View {
                     .scaleEffect(circleScale)
 
                 // Content: logo or countdown number
-                if let countdown = countdown {
+                if let countdown {
                     Text("\(countdown)")
                         .font(.system(size: 80, weight: .bold, design: .rounded))
-                        .foregroundStyle(MindAlertTheme.staticWhite)
+                        .foregroundColor(MindAlertTheme.staticWhite)
                         .transition(.scale.combined(with: .opacity))
+                        .id(countdown)
                 } else {
                     Image("Logo_White")
                         .resizable()
@@ -50,13 +53,16 @@ struct PanicButton: View {
                     }
             )
             .fullScreenCover(isPresented: $showingActivatedPlan) {
-                SafetyPlanActivatedView(viewModel: viewModel)
+                PlanActivatedView()
+                    .environmentObject(router)
+                    .environmentObject(viewModel)
             }
         }
     }
 
     private func startCountdown(maxScale: CGFloat) {
         countdown = 3
+        HapticManager.shared.playGradientHaptic()
 
         withAnimation(.linear(duration: holdDuration)) {
             circleScale = maxScale
@@ -75,7 +81,6 @@ struct PanicButton: View {
                     try? await Task.sleep(for: .milliseconds(500))
                     isPressed = false
                     circleScale = 1.0
-                    countdown = nil
                 } else {
                     withAnimation(.spring(duration: 0.3)) {
                         countdown = 3 - tick
@@ -88,6 +93,7 @@ struct PanicButton: View {
     private func cancelCountdown() {
         countdownTask?.cancel()
         countdownTask = nil
+        HapticManager.shared.stopHaptic()
         withAnimation(.easeOut(duration: 0.3)) {
             circleScale = 1.0
             countdown = nil

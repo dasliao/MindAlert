@@ -1,22 +1,40 @@
 import SwiftUI
 
+/// Main app tab container. Matches Play component: Tab_1 (3 tabs).
+/// Tabs: Resources (ProfessionalSupport) | Home | Profile (ProfileSetting)
 struct HomeTabView: View {
-    @ObservedObject var viewModel: SafetyPlanViewModel
-    var onRerunOnboarding: () -> Void
-    @State private var selectedTab = 1
+    @EnvironmentObject var viewModel: SafetyPlanViewModel
+    @EnvironmentObject var router: AppRouter
+    @State private var selectedTab: HomeTab = .home
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            Tab("Resources", systemImage: "tray.2", value: 0) {
-                ResourcesView()
+        VStack(spacing: 0) {
+            // Active screen
+            Group {
+                switch selectedTab {
+                case .resources:
+                    ProfessionalSupportView(isOnboarding: false)
+                case .home:
+                    HomeView()
+                case .profile:
+                    ProfileSettingView()
+                }
             }
-            Tab("Safety Plan", systemImage: "house.fill", value: 1) {
-                HomeView(viewModel: viewModel)
-            }
-            Tab("Profile", systemImage: "person", value: 2) {
-                ProfileView(viewModel: viewModel, onRerunOnboarding: onRerunOnboarding)
-            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            // Custom tab bar
+            MATabBar(selectedTab: $selectedTab)
         }
-        .tint(MindAlertTheme.mindGreen)
+        .ignoresSafeArea(edges: .bottom)
     }
+}
+
+#Preview {
+    HomeTabView()
+        .environmentObject({
+            let vm = SafetyPlanViewModel()
+            vm.setName("Alex")
+            return vm
+        }())
+        .environmentObject(AppRouter())
 }

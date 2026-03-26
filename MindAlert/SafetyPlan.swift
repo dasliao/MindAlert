@@ -2,8 +2,11 @@ import Foundation
 
 struct SafetyPlan: Codable {
     var name: String
+    var email: String
+    var termAgreed: Bool
     var strategies: [String]
     var contacts: [Contact]
+    var professionalContacts: [Contact]
     var emergencyService: String
     var emergencyMessage: String?
 
@@ -13,20 +16,33 @@ struct SafetyPlan: Codable {
         var phoneNumber: String
     }
 
-    // Custom decoder for backward compatibility with saved plans lacking emergencyMessage
+    // Custom decoder for backward compatibility
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
+        email = (try? container.decodeIfPresent(String.self, forKey: .email)) ?? ""
+        termAgreed = (try? container.decodeIfPresent(Bool.self, forKey: .termAgreed)) ?? false
         strategies = try container.decode([String].self, forKey: .strategies)
         contacts = try container.decode([Contact].self, forKey: .contacts)
+        professionalContacts = (try? container.decodeIfPresent([Contact].self, forKey: .professionalContacts)) ?? []
         emergencyService = try container.decode(String.self, forKey: .emergencyService)
         emergencyMessage = try container.decodeIfPresent(String.self, forKey: .emergencyMessage)
     }
 
-    init(name: String, strategies: [String], contacts: [Contact], emergencyService: String, emergencyMessage: String? = nil) {
+    init(name: String = "",
+         email: String = "",
+         termAgreed: Bool = false,
+         strategies: [String] = [],
+         contacts: [Contact] = [],
+         professionalContacts: [Contact] = [],
+         emergencyService: String = "911",
+         emergencyMessage: String? = nil) {
         self.name = name
+        self.email = email
+        self.termAgreed = termAgreed
         self.strategies = strategies
         self.contacts = contacts
+        self.professionalContacts = professionalContacts
         self.emergencyService = emergencyService
         self.emergencyMessage = emergencyMessage
     }
